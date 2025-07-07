@@ -18,8 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabBarController = UITabBarController()
         
-        let feedNavigationControlle = UINavigationController()
-        let profileNavigationController = UINavigationController()
+        let feedViewController = FeedViewController()
+        let profileViewController = ProfileViewController()
+        
+        let feedNavigationControlle = UINavigationController(rootViewController: feedViewController)
+        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         
         feedNavigationControlle.tabBarItem = UITabBarItem(
             title: "Лента",
@@ -32,8 +35,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             selectedImage: UIImage(systemName: "person.fill")
         )
         
+        tabBarController.viewControllers = [feedNavigationControlle, profileNavigationController]
+        tabBarController.selectedIndex = 0
         
-    
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         
         self.window = window
