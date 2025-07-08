@@ -8,13 +8,23 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
+    
+    let button: UIButton = UIButton()
+    var post: Post = Post(title:"")
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = .yellow
         self.title = "Пост"
+        
+        button.setTitle("Back", for: .normal)
+        view.addSubview(button)
+        
+        button.addAction(UIAction { _ in
+            self.dismiss(animated: true)
+        }, for: .touchUpInside)
     }
+    
     
 
     /*
@@ -27,4 +37,8 @@ class PostViewController: UIViewController {
     }
     */
 
+}
+
+struct Post {
+ var title: String
 }
