@@ -13,8 +13,9 @@ class FeedViewController: UIViewController {
     var postsList: [Post] = [Post(title: "Первый пост"), Post(title: "Второй пост")]
     private lazy var actionButtons: [UIButton] = {
         var buttons: [UIButton] = []
-        for post in postsList {
+        for (index, post) in postsList.enumerated() {
             let button = UIButton()
+            button.tag = index
             button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle("Перейти к посту (\(post.title))", for: .normal)
             button.setTitleColor(.systemBlue, for: .normal)
@@ -28,7 +29,7 @@ class FeedViewController: UIViewController {
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 10 // Расстояние между кнопками
+        stackView.spacing = 10
         stackView.alignment = .fill
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,40 +46,14 @@ class FeedViewController: UIViewController {
         
         for actionButton in actionButtons {
             layOuts.append(actionButton.heightAnchor.constraint(equalToConstant: 44))
+            actionButton.addTarget(self, action: #selector(openPost(_:)), for: .touchUpInside)
         }
         NSLayoutConstraint.activate(layOuts)
-        
-        for (actionButton, post) in zip(actionButtons, postsList) {
-//            actionButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-            actionButton.addAction(UIAction { _ in
-                let postViewController = PostViewController()
-                postViewController.post = post
-                postViewController.modalTransitionStyle = .flipHorizontal
-                postViewController.modalPresentationStyle = .fullScreen
-                self.present(postViewController, animated: true)
-            }, for: .touchUpInside)
-        }
-//
-//
     }
     
-//    @objc func buttonPressed(_ sender: UIButton) {
-//        let postViewController = PostViewController()
-//        postViewController.modalTransitionStyle = .flipHorizontal
-//        postViewController.modalPresentationStyle = .fullScreen
-//        
-//        present(postViewController, animated: true)
-//        
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func openPost(_ sender: UIButton) {
+        let postViewController = PostViewController()
+        postViewController.post = postsList[sender.tag]
+        navigationController?.pushViewController(postViewController, animated: true)
     }
-    */
-
 }

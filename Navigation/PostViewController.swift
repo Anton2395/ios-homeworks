@@ -9,33 +9,32 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    let button: UIButton = UIButton()
     var post: Post = Post(title:"")
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .yellow
-        self.title = "Пост"
+        title = post.title
         
-        button.setTitle("Back", for: .normal)
-        view.addSubview(button)
-        
-        button.addAction(UIAction { _ in
-            self.dismiss(animated: true)
-        }, for: .touchUpInside)
+        let infoButton = UIBarButtonItem(
+            image: UIImage(systemName: "info.circle"),
+            style: .plain,
+            target: self,
+            action: #selector(infoButtonTapped)
+        )
+        navigationItem.rightBarButtonItem = infoButton
     }
     
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func infoButtonTapped() {
+        
+        let infoVC = InfoViewController()
+        infoVC.modalTransitionStyle = .flipHorizontal
+        infoVC.modalPresentationStyle = .fullScreen
+        present(infoVC, animated: true)
     }
-    */
 
 }
 
