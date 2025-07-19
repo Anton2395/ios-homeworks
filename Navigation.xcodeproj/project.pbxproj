@@ -21,11 +21,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		12146B2A2E26E54800EF4378 /* Profile */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Profile;
-			sourceTree = "<group>";
-		};
 		12B9E97A2E1C3CF10027EAE4 /* Navigation */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -50,7 +45,6 @@
 		12B9E96F2E1C3CF00027EAE4 = {
 			isa = PBXGroup;
 			children = (
-				12146B2A2E26E54800EF4378 /* Profile */,
 				12B9E97A2E1C3CF10027EAE4 /* Navigation */,
 				12B9E9792E1C3CF10027EAE4 /* Products */,
 			);
@@ -80,7 +74,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				12146B2A2E26E54800EF4378 /* Profile */,
 				12B9E97A2E1C3CF10027EAE4 /* Navigation */,
 			);
 			name = Navigation;
