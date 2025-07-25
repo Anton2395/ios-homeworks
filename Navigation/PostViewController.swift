@@ -9,7 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    var post: Post = Post(title:"")
+    var post: PostTemp = PostTemp(title:"")
     
     
     override func viewDidLoad() {
@@ -38,6 +38,6 @@ class PostViewController: UIViewController {
 
 }
 
-struct Post {
+struct PostTemp {
  var title: String
 }

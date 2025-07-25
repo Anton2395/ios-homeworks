@@ -10,7 +10,7 @@ import UIKit
 class FeedViewController: UIViewController {
     
     
-    var postsList: [Post] = [Post(title: "Первый пост"), Post(title: "Второй пост")]
+    var postsList: [PostTemp] = [PostTemp(title: "Первый пост"), PostTemp(title: "Второй пост")]
     private lazy var actionButtons: [UIButton] = {
         var buttons: [UIButton] = []
         for (index, post) in postsList.enumerated() {
