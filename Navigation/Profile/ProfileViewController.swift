@@ -24,12 +24,6 @@ class ProfileViewController: UIViewController {
         case custom = "CustomTableViewCell_ReuseID"
     }
     
-//    private lazy var profileHeaderView: ProfileHeaderView = {
-//        let profileView = ProfileHeaderView()
-//        profileView.translatesAutoresizingMaskIntoConstraints = false
-//        return profileView
-//    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +35,7 @@ class ProfileViewController: UIViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
     }
     
     func setSubview() {
@@ -67,7 +61,6 @@ class ProfileViewController: UIViewController {
         tableView.setAndlayout(headerView: headerView)
         tableView.tableFooterView = UIView()
         
-//        tableView.register(BaseTableViewCell.self, forCellReuseIdentifier: CellReuseID.base.rawValue)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: CellReuseID.custom.rawValue)
         
         tableView.dataSource = self

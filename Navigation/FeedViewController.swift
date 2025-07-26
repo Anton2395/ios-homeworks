@@ -39,9 +39,6 @@ class FeedViewController: UIViewController {
         
         view.addSubview(stackView)
         var layOuts: [NSLayoutConstraint] = [
-//            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-//            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
-//            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20)
             stackView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
         ]
