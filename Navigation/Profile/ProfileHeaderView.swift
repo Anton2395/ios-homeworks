@@ -64,6 +64,11 @@ class ProfileHeaderView: UIView {
     private lazy var statusTextField: UITextField = {
         let textField = TextFieldWithPadding()
         textField.placeholder = "Write new status"
+        
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
@@ -75,6 +80,7 @@ class ProfileHeaderView: UIView {
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
         
         return textField
     }()
@@ -139,4 +145,11 @@ class ProfileHeaderView: UIView {
         }
     }
     
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
