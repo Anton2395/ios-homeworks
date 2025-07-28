@@ -157,7 +157,7 @@ class LogInViewController: UIViewController {
     
     
     func setupView() {
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func addSubviews() {

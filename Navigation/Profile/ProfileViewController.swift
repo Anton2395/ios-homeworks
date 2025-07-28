@@ -113,4 +113,15 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
-extension ProfileViewController: UITableViewDelegate {}
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You select \(indexPath.section) - section and \(indexPath.row) - row")
+        switch indexPath.section {
+        case 0:
+            let photoView = PhotosViewController()
+            navigationController?.pushViewController(photoView, animated: true)
+        default:
+            print("Did nothing")
+        }
+    }
+}
