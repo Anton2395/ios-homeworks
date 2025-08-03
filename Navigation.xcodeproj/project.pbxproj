@@ -15,6 +15,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Profile/Untitled.swift,
 			);
 			target = 12B9E9772E1C3CF10027EAE4 /* Navigation */;
 		};

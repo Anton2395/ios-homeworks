@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController {
     }()
     
     private enum CellReuseID: String {
-        case base = "BaseTableViewCell_ReuseID"
+        case photo = "PhotoTableViewCell_ReuseID"
         case custom = "CustomTableViewCell_ReuseID"
     }
     
@@ -61,6 +61,7 @@ class ProfileViewController: UIViewController {
         tableView.setAndlayout(headerView: headerView)
         tableView.tableFooterView = UIView()
         
+        tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: CellReuseID.photo.rawValue)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: CellReuseID.custom.rawValue)
         
         tableView.dataSource = self
@@ -71,25 +72,56 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return data.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CellReuseID.custom.rawValue,
-            for: indexPath
-        ) as? PostTableViewCell else {
-            fatalError("could not dequeueReusableCell")
+        switch indexPath.section {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellReuseID.photo.rawValue,
+                for: indexPath
+            ) as? PhotoTableViewCell else {
+                fatalError("could not dequeueReusableCell")
+            }
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellReuseID.custom.rawValue,
+                for: indexPath
+            ) as? PostTableViewCell else {
+                fatalError("could not dequeueReusableCell")
+            }
+            
+            cell.update(data[indexPath.row])
+            
+            return cell
+        default:
+            fatalError("unexpected section")
         }
-        
-        cell.update(data[indexPath.row])
-        
-        return cell
     }
 }
 
-extension ProfileViewController: UITableViewDelegate {}
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You select \(indexPath.section) - section and \(indexPath.row) - row")
+        switch indexPath.section {
+        case 0:
+            let photoView = PhotosViewController()
+            navigationController?.pushViewController(photoView, animated: true)
+        default:
+            print("Did nothing")
+        }
+    }
+}
