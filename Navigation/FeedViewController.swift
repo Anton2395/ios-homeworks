@@ -10,7 +10,7 @@ import UIKit
 class FeedViewController: UIViewController {
     
     
-    var postsList: [Post] = [Post(title: "Первый пост"), Post(title: "Второй пост")]
+    var postsList: [PostTemp] = [PostTemp(title: "Первый пост"), PostTemp(title: "Второй пост")]
     private lazy var actionButtons: [UIButton] = {
         var buttons: [UIButton] = []
         for (index, post) in postsList.enumerated() {
@@ -39,9 +39,6 @@ class FeedViewController: UIViewController {
         
         view.addSubview(stackView)
         var layOuts: [NSLayoutConstraint] = [
-//            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-//            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
-//            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20)
             stackView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
         ]

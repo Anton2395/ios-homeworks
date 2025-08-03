@@ -12,7 +12,6 @@ class ProfileHeaderView: UIView {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Avatar")
-//        imageView.frame = CGRect(x: 16, y: startYAxsio+16, width: 100, height: 100)
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = UIColor.white.cgColor
@@ -23,7 +22,6 @@ class ProfileHeaderView: UIView {
     
     private lazy var fullNameLabel: UILabel = {
         let label = UILabel()
-//        label.frame = CGRect(x: 132, y: startYAxsio+27, width: 100, height: 18)
         label.text = "My name"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
@@ -36,7 +34,6 @@ class ProfileHeaderView: UIView {
         let button = UIButton()
         let screenWidth = UIScreen.main.bounds.width
         let buttonWidth = screenWidth - 32
-//        button.frame = CGRect(x: 16, y: startYAxsio+158, width: Int(buttonWidth), height: 50)
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
@@ -55,7 +52,6 @@ class ProfileHeaderView: UIView {
     
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
-//        label.frame = CGRect(x: 132, y: startYAxsio+84, width: 200, height: 14)
         label.text = "Waiting for something..."
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
@@ -67,8 +63,12 @@ class ProfileHeaderView: UIView {
     
     private lazy var statusTextField: UITextField = {
         let textField = TextFieldWithPadding()
-//        textField.frame = CGRect(x: 132, y: startYAxsio+108, width: 200, height: 40)
         textField.placeholder = "Write new status"
+        
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
@@ -80,13 +80,10 @@ class ProfileHeaderView: UIView {
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
         
         return textField
     }()
-    
-    
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,6 +96,7 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupViews() {
+        backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(setStatusButton)
@@ -119,6 +117,7 @@ class ProfileHeaderView: UIView {
             setStatusButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -16),
             
             statusLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: -18),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
@@ -146,4 +145,11 @@ class ProfileHeaderView: UIView {
         }
     }
     
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
