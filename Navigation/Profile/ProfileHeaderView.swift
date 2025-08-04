@@ -9,7 +9,7 @@ import UIKit
 class ProfileHeaderView: UIView {
     private let startYAxsio = 80
     
-    private lazy var avatarImageView: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Avatar")
         imageView.layer.cornerRadius = 50
@@ -17,6 +17,9 @@ class ProfileHeaderView: UIView {
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        
         return imageView
     }()
     
@@ -87,11 +90,14 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupViews()
+        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         setupViews()
     }
     
@@ -144,6 +150,7 @@ class ProfileHeaderView: UIView {
             newStatusText = status
         }
     }
+    
     
 }
 
