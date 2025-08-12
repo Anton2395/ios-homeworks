@@ -15,9 +15,32 @@ class ProfileViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
         
         return tableView
     }()
+    
+    let headerView = ProfileHeaderView()
+    
+    private let overlayView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .white
+        button.alpha = 0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private var animatedAvatarView: UIImageView?
+    private var avatarOriginalFrame: CGRect = .zero
     
     private enum CellReuseID: String {
         case photo = "PhotoTableViewCell_ReuseID"
@@ -31,7 +54,97 @@ class ProfileViewController: UIViewController {
         setSubview()
         setConstraints()
         
+        setupActions()
+        
         tuneTableView()
+    }
+    
+    private func setupActions() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        headerView.avatarImageView.isUserInteractionEnabled = true
+        headerView.avatarImageView.addGestureRecognizer(tap)
+        
+        closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
+    }
+    
+    @objc func didTapClose() {
+        print("close close close")
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.closeButton.alpha = 0
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.5,
+                    animations: {
+                        self.animatedAvatarView?.frame = self.avatarOriginalFrame
+                        self.animatedAvatarView?.layer.cornerRadius = self.headerView.avatarImageView.layer.cornerRadius
+                        self.overlayView.alpha = 0
+                    },
+                    completion: { _ in
+                        self.animatedAvatarView?.removeFromSuperview()
+                        self.overlayView.removeFromSuperview()
+                        self.closeButton.removeFromSuperview()
+                    }
+                )
+            }
+        )
+    }
+    
+    @objc func didTapAvatar() {
+        print("tap tap tap")
+        guard let window = view.window else { return }
+        
+        avatarOriginalFrame = headerView.avatarImageView.convert(headerView.avatarImageView.bounds, to: window)
+        
+        let avatar = UIImageView(
+            image: headerView.avatarImageView.image
+        )
+        avatar.contentMode = .scaleAspectFit
+        avatar.clipsToBounds = true
+        avatar.frame = avatarOriginalFrame
+        avatar.layer.cornerRadius = headerView.avatarImageView.layer.cornerRadius
+        animatedAvatarView = avatar
+        window.addSubview(overlayView)
+        window.addSubview(avatar)
+        window.addSubview(closeButton)
+        
+        NSLayoutConstraint.activate([
+            overlayView.topAnchor.constraint(equalTo: window.topAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
+            overlayView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+            
+            closeButton.topAnchor.constraint(equalTo: window.safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeButton.trailingAnchor.constraint(equalTo: window.safeAreaAspectFitLayoutGuide.trailingAnchor, constant: -16),
+            closeButton.widthAnchor.constraint(equalToConstant: 40),
+            closeButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        window.layoutIfNeeded()
+        
+        let targetWidth = window.bounds.width
+        let aspectRatio = avatar.frame.height / avatar.frame.width
+        let targetHeight = targetWidth * aspectRatio
+        let targetFrame = CGRect(x: 0, y: (window.bounds.height - targetHeight)/2, width: targetWidth, height: targetHeight)
+        
+        
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.animatedAvatarView?.frame = targetFrame
+                self.animatedAvatarView?.layer.cornerRadius = 0
+                self.overlayView.alpha = 0.5
+            },
+            completion:{ _ in
+                UIView.animate(withDuration: 0.3) {
+                    self.closeButton.alpha = 1
+                }
+                print(targetFrame)
+                print("finish")
+            }
+        )
     }
     
     func setupView() {
@@ -57,7 +170,7 @@ class ProfileViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 300.0
         
-        let headerView = ProfileHeaderView()
+        
         tableView.setAndlayout(headerView: headerView)
         tableView.tableFooterView = UIView()
         
