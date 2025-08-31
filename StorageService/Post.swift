@@ -5,16 +5,16 @@
 //  Created by Toha Shilin on 25.07.25.
 //
 
-struct Post {
-    let author: String
-    let description: String
-    let image: String
-    var likes: Int
-    var views: Int
+public struct Post {
+    public let author: String
+    public let description: String
+    public let image: String
+    public var likes: Int
+    public var views: Int
 }
 
 extension Post {
-    static func make() -> [Post] {
+    public static func make() -> [Post] {
         return [
             Post(
                 author: "anton1",

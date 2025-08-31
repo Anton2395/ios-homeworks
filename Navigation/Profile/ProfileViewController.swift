@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     // MARK: - Data
@@ -149,6 +150,12 @@ class ProfileViewController: UIViewController {
     
     func setupView() {
         view.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+        
+        #if DEBUG
+        view.backgroundColor = .systemGreen
+        #else
+        view.backgroundColor = .systemBlue
+        #endif
     }
     
     func setSubview() {
