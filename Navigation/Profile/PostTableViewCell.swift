@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     private lazy var authorLabel: UILabel = {
@@ -104,9 +105,19 @@ class PostTableViewCell: UITableViewCell {
     
     func update(_ post: Post) {
         authorLabel.text = post.author
-        imagePostView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
         likeLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
+        if let image = UIImage(named: post.image) {
+            let processor = ImageProcessor()
+            processor.processImage(
+                sourceImage: image,
+                filter: .noir
+            ) { processedImage in
+                DispatchQueue.main.async {
+                    self.imagePostView.image = processedImage
+                }
+            }
+        }
     }
 }
