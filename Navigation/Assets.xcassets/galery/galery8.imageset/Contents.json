@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "a poster of a cat like godzilla.jpeg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
