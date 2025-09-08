@@ -151,8 +151,23 @@ class LogInViewController: UIViewController {
     }
     
     @objc func pressedLogin(_ sender: UIButton) {
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+        #if DEBUG
+        let userService = TestUserService()
+        #else
+        let userService = CurrentUserService()
+        #endif
+        if let user = userService.logIn(name: emailPhoneField.text ?? "") {
+            let profileViewController = ProfileViewController(user: user)
+            navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            let alert = UIAlertController(
+                title: "Ошибка входа",
+                message: "Неверное имя пользователя",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            present(alert, animated: true)
+        }
     }
     
     

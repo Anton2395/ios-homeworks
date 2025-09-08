@@ -12,6 +12,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Data
     fileprivate let data = Post.make()
     
+    var user: User?
+    
     // MARK: - Subviews
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -46,6 +48,18 @@ class ProfileViewController: UIViewController {
     private enum CellReuseID: String {
         case photo = "PhotoTableViewCell_ReuseID"
         case custom = "CustomTableViewCell_ReuseID"
+    }
+    
+    // MARK: - Init
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+        headerView.setupUserParam(user: user)
+    }
+    
+    required init?(coder: NSCoder) {
+        self.user = nil
+        super.init(coder: coder)
     }
     
     override func viewDidLoad() {
