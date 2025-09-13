@@ -88,6 +88,7 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -134,6 +135,12 @@ class ProfileHeaderView: UIView {
             statusTextField.heightAnchor.constraint(equalToConstant: 40)
             
         ])
+    }
+    
+    func setupUserParam(user: User?) {
+        avatarImageView.image = user?.image
+        fullNameLabel.text = user?.fullName
+        statusLabel.text = user?.status
     }
     
     @objc func buttonPressed() {
