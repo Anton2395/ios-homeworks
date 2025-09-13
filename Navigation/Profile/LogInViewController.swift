@@ -10,6 +10,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var loginDelegate: LoginViewControllerDelegate?
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
@@ -151,12 +153,17 @@ class LogInViewController: UIViewController {
     }
     
     @objc func pressedLogin(_ sender: UIButton) {
-        #if DEBUG
-        let userService = TestUserService()
-        #else
-        let userService = CurrentUserService()
-        #endif
-        if let user = userService.logIn(name: emailPhoneField.text ?? "") {
+        guard let login = emailPhoneField.text, let password = passwordField.text else {
+            let alert = UIAlertController(
+                title: "Ошибка ввода",
+                message: "Поля должны быть заполнены",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            present(alert, animated: true)
+            return
+        }
+        if let user = loginDelegate?.check(login: login, password: password) {
             let profileViewController = ProfileViewController(user: user)
             navigationController?.pushViewController(profileViewController, animated: true)
         } else {

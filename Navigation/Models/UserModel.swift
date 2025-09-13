@@ -8,7 +8,14 @@ import UIKit
 
 
 protocol UserService {
+    var user: User { get set }
     func logIn(name: String) -> User?
+}
+
+extension UserService {
+    func logIn(name: String) -> User? {
+        return user.name == name ? user : nil
+    }
 }
 
 class User {
@@ -28,27 +35,19 @@ class User {
 
 
 class CurrentUserService: UserService {
-    private let user = User(
-        name: "anton",
+    var user = User(
+        name: "admin",
         fullName: "Anton Shilin",
         image: UIImage(named: "Avatar"),
         status: "tut"
     )
-    
-    func logIn(name: String) -> User? {
-        return user.name == name ? user : nil
-    }
 }
 
 class TestUserService: UserService {
-    private let testUser = User(
-        name: "test",
+    var user = User(
+        name: "admin",
         fullName: "Test User",
         image: UIImage(systemName: "person.fill"),
         status: "Debug mode user"
     )
-    
-    func logIn(name: String) -> User? {
-        return testUser.name == name ? testUser : nil
-    }
 }
