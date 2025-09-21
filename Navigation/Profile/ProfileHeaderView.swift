@@ -34,12 +34,11 @@ class ProfileHeaderView: UIView {
     }()
     
     private lazy var setStatusButton: UIButton = {
-        let button = UIButton()
-        let screenWidth = UIScreen.main.bounds.width
-        let buttonWidth = screenWidth - 32
-        button.setTitle("Show status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        let button = CustomButton(
+            title: "Show status",
+            titleColor: .white,
+            backgroundColor: .systemBlue
+        )
         button.layer.cornerRadius = 4.0
         
         button.layer.shadowColor = UIColor.black.cgColor
@@ -48,8 +47,7 @@ class ProfileHeaderView: UIView {
         button.layer.shadowRadius = 4.0
         
         button.clipsToBounds = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.action = buttonPressed
         return button
     }()
     
@@ -143,7 +141,7 @@ class ProfileHeaderView: UIView {
         statusLabel.text = user?.status
     }
     
-    @objc func buttonPressed() {
+    func buttonPressed() {
         statusLabel.text = newStatusText
         if let statusText = statusLabel.text, !statusText.isEmpty {
             print(statusText)

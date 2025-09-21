@@ -37,6 +37,7 @@ class LogInViewController: UIViewController {
     private lazy var emailPhoneField: UITextField = { [unowned self] in
         let textField = UITextField()
         textField.placeholder = "Email or phone"
+        textField.text = "admin"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -63,6 +64,7 @@ class LogInViewController: UIViewController {
     private lazy var passwordField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
+        textField.text = "12345"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -110,16 +112,13 @@ class LogInViewController: UIViewController {
     
     
     private lazy var loginButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle("Log In", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(named: "ColorButton")
+        let button = CustomButton(
+            title: "Log In",
+            titleColor: .white,
+            backgroundColor: UIColor(named: "ColorButton")
+        )
         button.layer.cornerRadius = 10
-        
-        button.addTarget(self, action: #selector(pressedLogin), for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.action = pressedLogin
         return button
     }()
     
@@ -152,7 +151,7 @@ class LogInViewController: UIViewController {
         scrollView.contentInset.bottom = 0.0
     }
     
-    @objc func pressedLogin(_ sender: UIButton) {
+    func pressedLogin() {
         guard let login = emailPhoneField.text, let password = passwordField.text else {
             let alert = UIAlertController(
                 title: "Ошибка ввода",
