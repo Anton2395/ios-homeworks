@@ -5,10 +5,12 @@
 //  Created by Toha Shilin on 28.07.25.
 //
 import UIKit
-
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
-    lazy var phostos = Gallery.make()
+    private var images: [UIImage] = []
+    private var imagePublisherFacade: ImagePublisherFacade?
+    private var isSubscribed = false
     
     private lazy var collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -30,16 +32,41 @@ class PhotosViewController: UIViewController {
         setupView()
         setupSubviews()
         setupLayouts()
+        
+        
+        imagePublisherFacade = ImagePublisherFacade()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        if !isSubscribed {
+            imagePublisherFacade?.subscribe(self)
+            isSubscribed = true
+            
+            let galleryImages = Gallery.make().compactMap { UIImage(named: $0.imageName) }
+            imagePublisherFacade?.addImagesWithTimer(
+                time: 0.5,
+                repeat: galleryImages.count,
+                userImages: galleryImages
+            )
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        if isSubscribed {
+            imagePublisherFacade?.removeSubscription(for: self)
+            isSubscribed = false
+        }
+    }
+    
+    deinit {
+        if isSubscribed {
+            imagePublisherFacade?.removeSubscription(for: self)
+        }
     }
         
     private func setupView() {
@@ -75,7 +102,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        phostos.count
+        images.count
     }
 
     func collectionView(
@@ -86,8 +113,8 @@ extension PhotosViewController: UICollectionViewDataSource {
             withReuseIdentifier: CollectionCellReuseID.base.rawValue,
             for: indexPath) as! PhotosCollectionViewCell
         
-        let photo = phostos[indexPath.row]
-        cell.setup(with: photo.imageName)
+        let photo = images[indexPath.row]
+        cell.setup(with: photo)
         
         return cell
     }
@@ -138,5 +165,20 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
         8.0
+    }
+}
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        DispatchQueue.main.async {
+            for image in images {
+                let insertIndex = self.images.count
+                self.images.append(image)
+                let indexPath = IndexPath(item: insertIndex, section: 0)
+                self.collectionView.performBatchUpdates({
+                    self.collectionView.insertItems(at: [indexPath])
+                }, completion: nil)
+            }
+        }
     }
 }
