@@ -115,10 +115,10 @@ class LogInViewController: UIViewController {
         let button = CustomButton(
             title: "Log In",
             titleColor: .white,
-            backgroundColor: UIColor(named: "ColorButton")
+            backgroundColor: UIColor(named: "ColorButton"),
+            action: pressedLogin
         )
         button.layer.cornerRadius = 10
-        button.action = pressedLogin
         return button
     }()
     

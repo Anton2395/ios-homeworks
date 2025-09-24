@@ -37,7 +37,8 @@ class ProfileHeaderView: UIView {
         let button = CustomButton(
             title: "Show status",
             titleColor: .white,
-            backgroundColor: .systemBlue
+            backgroundColor: .systemBlue,
+            action: buttonPressed
         )
         button.layer.cornerRadius = 4.0
         
@@ -47,7 +48,6 @@ class ProfileHeaderView: UIView {
         button.layer.shadowRadius = 4.0
         
         button.clipsToBounds = false
-        button.action = buttonPressed
         return button
     }()
     

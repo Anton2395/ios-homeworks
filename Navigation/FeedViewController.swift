@@ -20,7 +20,9 @@ class FeedViewController: UIViewController {
                 title: "Перейти к посту (\(post.title))",
                 titleColor: .systemBlue,
                 backgroundColor: nil
-            )
+            ) { [weak self] in
+                self?.openPost(at: index) // напрямую передаём индекс
+            }
             button.tag = index
             buttons.append(button)
         }
@@ -55,8 +57,12 @@ class FeedViewController: UIViewController {
     }()
     
     private lazy var checkButton: UIButton = {
-        let button = CustomButton(title: "Check", titleColor: .black, backgroundColor: .systemBlue)
-        button.action = checkPassword
+        let button = CustomButton(
+            title: "Check",
+            titleColor: .black,
+            backgroundColor: .systemBlue,
+            action: checkPassword
+        )
         return button
     }()
 
@@ -80,7 +86,7 @@ class FeedViewController: UIViewController {
         
         for actionButton in actionButtons {
             layOuts.append(actionButton.heightAnchor.constraint(equalToConstant: 44))
-            actionButton.addTarget(self, action: #selector(openPost(_:)), for: .touchUpInside)
+//            actionButton.addTarget(self, action: #selector(openPost(_:)), for: .touchUpInside)
         }
         NSLayoutConstraint.activate(layOuts)
         
@@ -110,9 +116,9 @@ class FeedViewController: UIViewController {
         ])
     }
     
-    @objc func openPost(_ sender: UIButton) {
+    private func openPost(at index: Int) {
         let postViewController = PostViewController()
-        postViewController.post = postsList[sender.tag]
+        postViewController.post = postsList[index]
         navigationController?.pushViewController(postViewController, animated: true)
     }
     
