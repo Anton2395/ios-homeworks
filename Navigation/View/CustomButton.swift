@@ -7,10 +7,13 @@
 import UIKit
 
 class CustomButton: UIButton {
-    var action: (() -> Void)?
+    typealias Action = () -> Void
+        
+    var buttonAction: Action
     
     
-    init(title: String, titleColor: UIColor, backgroundColor: UIColor?) {
+    init(title: String, titleColor: UIColor, backgroundColor: UIColor?, action: @escaping Action) {
+        buttonAction = action
         super.init(frame: .zero)
         configurate(title: title, titleColor: titleColor, backgroundColor: backgroundColor)
     }
@@ -28,7 +31,6 @@ class CustomButton: UIButton {
     }
     
     @objc private func buttonTapped() {
-        guard let action = action else { return }
-        action()
+        buttonAction()
     }
 }

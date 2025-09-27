@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Data
     fileprivate let data = Post.make()
     
-    var user: User?
+    private let viewModel: ProfileViewModel
     
     // MARK: - Subviews
     private lazy var tableView: UITableView = {
@@ -52,14 +52,13 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Init
     init(user: User) {
-        self.user = user
+        self.viewModel = ProfileViewModel(user: user)
         super.init(nibName: nil, bundle: nil)
         headerView.setupUserParam(user: user)
     }
     
     required init?(coder: NSCoder) {
-        self.user = nil
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -72,6 +71,10 @@ class ProfileViewController: UIViewController {
         setupActions()
         
         tuneTableView()
+        
+        viewModel.onDataUpdated = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     private func setupActions() {
@@ -206,18 +209,11 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return data.count
-        default:
-            return 0
-        }
+            return viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -238,8 +234,9 @@ extension ProfileViewController: UITableViewDataSource {
                 fatalError("could not dequeueReusableCell")
             }
             
-            cell.update(data[indexPath.row])
-            
+            if let post = viewModel.post(at: indexPath) {
+                cell.update(post)
+            }
             return cell
         default:
             fatalError("unexpected section")
