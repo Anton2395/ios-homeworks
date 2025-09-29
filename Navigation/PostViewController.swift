@@ -11,6 +11,8 @@ class PostViewController: UIViewController {
     
     var post: PostTemp = PostTemp(title:"")
     
+    var onPostsInfo: (() -> Void)?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +31,11 @@ class PostViewController: UIViewController {
     
     
     @objc private func infoButtonTapped() {
-        
-        let infoVC = InfoViewController()
-        infoVC.modalTransitionStyle = .flipHorizontal
-        infoVC.modalPresentationStyle = .fullScreen
-        present(infoVC, animated: true)
+        onPostsInfo?()
     }
 
 }
 
 struct PostTemp {
- var title: String
+    var title: String
 }

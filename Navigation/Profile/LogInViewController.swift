@@ -12,6 +12,8 @@ class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     
+    var onLoginSuccess: ((User) -> Void)?
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
@@ -163,8 +165,7 @@ class LogInViewController: UIViewController {
             return
         }
         if let user = loginDelegate?.check(login: login, password: password) {
-            let profileViewController = ProfileViewController(user: user)
-            navigationController?.pushViewController(profileViewController, animated: true)
+            onLoginSuccess?(user)
         } else {
             let alert = UIAlertController(
                 title: "Ошибка входа",

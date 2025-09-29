@@ -14,6 +14,9 @@ class ProfileViewController: UIViewController {
     
     private let viewModel: ProfileViewModel
     
+    var showPhotosCollection: (() -> Void)?
+    
+    
     // MARK: - Subviews
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -249,8 +252,7 @@ extension ProfileViewController: UITableViewDelegate {
         print("You select \(indexPath.section) - section and \(indexPath.row) - row")
         switch indexPath.section {
         case 0:
-            let photoView = PhotosViewController()
-            navigationController?.pushViewController(photoView, animated: true)
+            showPhotosCollection?()
         default:
             print("Did nothing")
         }

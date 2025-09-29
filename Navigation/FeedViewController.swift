@@ -12,6 +12,8 @@ class FeedViewController: UIViewController {
     let stackView = UIStackView()
     let model = FeedModel()
     
+    var onPost: ((PostTemp) -> Void)?
+    
     var postsList: [PostTemp] = [PostTemp(title: "Первый пост"), PostTemp(title: "Второй пост")]
     private lazy var actionButtons: [UIButton] = {
         var buttons: [UIButton] = []
@@ -117,9 +119,7 @@ class FeedViewController: UIViewController {
     }
     
     private func openPost(at index: Int) {
-        let postViewController = PostViewController()
-        postViewController.post = postsList[index]
-        navigationController?.pushViewController(postViewController, animated: true)
+        onPost?(postsList[index])
     }
     
     private func checkPassword() {
