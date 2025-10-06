@@ -124,6 +124,35 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var findePasswordButton: UIButton = {
+        let button = CustomButton(
+            title: "Подобрать пароль",
+            titleColor: .white,
+            backgroundColor: UIColor.systemGray,
+            action: findePassword
+        )
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
+    private lazy var generatedPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Generated password"
+        return label
+    }()
+    
+    private lazy var activity: UIActivityIndicatorView = {
+        let a = UIActivityIndicatorView(style: .medium)
+        a.hidesWhenStopped = true
+        a.translatesAutoresizingMaskIntoConstraints = false
+        return a
+    }()
+    
+    private let bruteForcer = BruteForcer()
+    
+    private let allowedCharset: [Character] = Array("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,7 +169,7 @@ class LogInViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        bruteForcer.cancel()
         removeKeyboardObservers()
     }
     
@@ -177,6 +206,46 @@ class LogInViewController: UIViewController {
         }
     }
     
+    func findePassword() {
+        print("find password")
+        let length = 4 // для демонстрации: 3-4 символа
+        let password = randomPassword(length: length, charset: allowedCharset.map { String($0) })
+        generatedPasswordLabel.text = "Generated: \(password)"
+        self.passwordField.isSecureTextEntry = false
+        
+        DispatchQueue.main.async {
+           self.activity.startAnimating()
+           self.findePasswordButton.isEnabled = false
+        }
+        bruteForcer.bruteForce(target: password, charset: allowedCharset, progress: { attempt in
+            self.generatedPasswordLabel.text = "Trying: \(attempt)"
+        }, completion: { [weak self] found in
+            guard let self = self else { return }
+        
+            self.activity.stopAnimating()
+            self.findePasswordButton.isEnabled = true
+            
+            if let found = found {
+                // показываем пароль в поле и делаем видимым
+                self.passwordField.text = found
+                self.passwordField.isSecureTextEntry = false
+                self.generatedPasswordLabel.text = "Found: \(found)"
+            } else {
+                self.generatedPasswordLabel.text = "Not found / cancelled"
+            }
+        })
+        
+    }
+    
+    func randomPassword(length: Int, charset: [String]) -> String {
+        var s = ""
+        for _ in 0..<length {
+            let idx = Int.random(in: 0..<charset.count)
+            s.append(charset[idx])
+        }
+        return s
+    }
+    
     
     func setupView() {
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -195,6 +264,10 @@ class LogInViewController: UIViewController {
         contentView.addSubview(textFieldsStackView)
         
         contentView.addSubview(loginButton)
+        
+        contentView.addSubview(findePasswordButton)
+        contentView.addSubview(generatedPasswordLabel)
+        contentView.addSubview(activity)
         
     }
     
@@ -234,8 +307,22 @@ class LogInViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginButton.heightAnchor.constraint(equalToConstant: 50)
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
             
+            findePasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            findePasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            findePasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            findePasswordButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            generatedPasswordLabel.topAnchor.constraint(equalTo: findePasswordButton.bottomAnchor, constant: 16),
+            generatedPasswordLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            generatedPasswordLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            generatedPasswordLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+        ])
+        NSLayoutConstraint.activate([
+            activity.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
+            activity.leadingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: 8)
         ])
     }
     
@@ -271,3 +358,5 @@ extension LogInViewController: UITextFieldDelegate {
         return true
     }
 }
+
+
