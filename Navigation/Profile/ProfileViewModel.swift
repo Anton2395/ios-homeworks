@@ -39,4 +39,22 @@ final class ProfileViewModel {
         guard indexPath.section == 1 else { return nil }
         return posts[indexPath.row]
     }
+    
+    func updatePosts() {
+        posts = generateFakeUpdates(for: posts)
+        onDataUpdated?()
+    }
+    
+    
+    private func generateFakeUpdates(for posts: [Post]) -> [Post] {
+        return posts.map {
+            Post(
+                author: $0.author,
+                description: $0.description,
+                image: $0.image,
+                likes: Int.random(in: 0...20),
+                views: Int.random(in: 0...100)
+            )
+        }
+    }
 }

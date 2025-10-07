@@ -9,12 +9,12 @@ import UIKit
 import StorageService
 
 class ProfileViewController: UIViewController {
-    // MARK: - Data
-    fileprivate let data = Post.make()
-    
     private let viewModel: ProfileViewModel
     
     var showPhotosCollection: (() -> Void)?
+    
+    // Timer for updating post details
+    var timer: Timer?
     
     
     // MARK: - Subviews
@@ -64,6 +64,16 @@ class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopTimer()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,6 +88,8 @@ class ProfileViewController: UIViewController {
         viewModel.onDataUpdated = { [weak self] in
             self?.tableView.reloadData()
         }
+        
+        
     }
     
     private func setupActions() {
@@ -90,6 +102,7 @@ class ProfileViewController: UIViewController {
     
     @objc func didTapClose() {
         print("close close close")
+        viewModel.updatePosts()
         UIView.animate(
             withDuration: 0.3,
             animations: {
@@ -171,11 +184,11 @@ class ProfileViewController: UIViewController {
     func setupView() {
         view.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
         
-        #if DEBUG
-        view.backgroundColor = .systemGreen
-        #else
-        view.backgroundColor = .systemBlue
-        #endif
+//        #if DEBUG
+//        view.backgroundColor = .systemGreen
+//        #else
+//        view.backgroundColor = .systemBlue
+//        #endif
     }
     
     func setSubview() {
@@ -206,6 +219,27 @@ class ProfileViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(updatePosts),
+            userInfo: nil,
+            repeats: true
+        )
+        guard let timer = timer else { return }
+        RunLoop.current.add(timer, forMode: .common)
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc func updatePosts() {
+        viewModel.updatePosts()
     }
 }
 
