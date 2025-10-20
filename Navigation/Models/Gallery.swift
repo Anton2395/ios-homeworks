@@ -10,7 +10,7 @@ struct Gallery {
 }
 
 extension Gallery {
-    static func make() -> [Gallery] {
-        (1...20).compactMap { Gallery(imageName: "galery\($0)") }
+    static func make(completion: (Result<[Gallery], ApiError>) -> Void)  {
+        completion(.success((1...20).compactMap { Gallery(imageName: "galery\($0)") }))
     }
 }

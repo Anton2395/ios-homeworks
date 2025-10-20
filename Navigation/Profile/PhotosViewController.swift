@@ -44,13 +44,25 @@ class PhotosViewController: UIViewController {
         if !isSubscribed {
             imagePublisherFacade?.subscribe(self)
             isSubscribed = true
-            
-            let galleryImages = Gallery.make().compactMap { UIImage(named: $0.imageName) }
-            imagePublisherFacade?.addImagesWithTimer(
-                time: 0.5,
-                repeat: galleryImages.count,
-                userImages: galleryImages
-            )
+            Gallery.make() { [weak self] result in
+                switch result {
+                case .success(let galleryImages):
+                    self!.imagePublisherFacade?.addImagesWithTimer(
+                        time: 0.5,
+                        repeat: galleryImages.compactMap { UIImage(named: $0.imageName) }.count,
+                        userImages: galleryImages.compactMap { UIImage(named: $0.imageName) }
+                    )
+                    print("Photos start loading")
+                case .failure(_):
+                    print("something worng with loading photos")
+                }
+            }
+//            let galleryImages = Gallery.make().compactMap { UIImage(named: $0.imageName) }
+//            imagePublisherFacade?.addImagesWithTimer(
+//                time: 0.5,
+//                repeat: galleryImages.count,
+//                userImages: galleryImages
+//            )
         }
     }
     

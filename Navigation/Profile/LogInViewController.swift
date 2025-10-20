@@ -154,7 +154,9 @@ class LogInViewController: UIViewController {
     }
     
     func pressedLogin() {
-        guard let login = emailPhoneField.text, let password = passwordField.text else {
+        do {
+            try self.processLogin()
+        } catch ApiError.emptyField {
             let alert = UIAlertController(
                 title: "Ошибка ввода",
                 message: "Поля должны быть заполнены",
@@ -163,10 +165,7 @@ class LogInViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             present(alert, animated: true)
             return
-        }
-        if let user = loginDelegate?.check(login: login, password: password) {
-            onLoginSuccess?(user)
-        } else {
+        } catch ApiError.wrongPassword {
             let alert = UIAlertController(
                 title: "Ошибка входа",
                 message: "Неверное имя пользователя",
@@ -174,6 +173,19 @@ class LogInViewController: UIViewController {
             )
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             present(alert, animated: true)
+        } catch {
+            print("Something wrong")
+        }
+    }
+    
+    func processLogin() throws {
+        guard let login = emailPhoneField.text, let password = passwordField.text else {
+            throw ApiError.emptyField
+        }
+        if let user = loginDelegate?.check(login: login, password: password) {
+            onLoginSuccess?(user)
+        } else {
+            throw ApiError.wrongPassword
         }
     }
     
