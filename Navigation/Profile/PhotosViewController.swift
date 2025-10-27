@@ -8,9 +8,11 @@ import UIKit
 import iOSIntPackage
 
 class PhotosViewController: UIViewController {
-    private var images: [UIImage] = []
-    private var imagePublisherFacade: ImagePublisherFacade?
-    private var isSubscribed = false
+    private var images: [UIImage] = Gallery.make().compactMap { gal in
+        UIImage(named: gal.imageName)!
+    }
+    
+    private var imageProcessor: ImageProcessor?
     
     private lazy var collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -34,7 +36,7 @@ class PhotosViewController: UIViewController {
         setupLayouts()
         
         
-        imagePublisherFacade = ImagePublisherFacade()
+        imageProcessor = ImageProcessor()
         
     }
     
@@ -69,15 +71,27 @@ class PhotosViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        if isSubscribed {
-            imagePublisherFacade?.removeSubscription(for: self)
-            isSubscribed = false
-        }
     }
     
     deinit {
-        if isSubscribed {
-            imagePublisherFacade?.removeSubscription(for: self)
+    }
+    
+    private func measureExecutionTime(for qos: QualityOfService, filter: ColorFilter) {
+        let start = CFAbsoluteTimeGetCurrent()
+        imageProcessor?.processImagesOnThread(
+            sourceImages: images,
+            filter: filter,
+            qos: qos
+        ) { [weak self] processedCGImages in
+            guard let self else { return }
+            let processedUIImages = processedCGImages.compactMap { $0.flatMap { UIImage(cgImage: $0)} }
+            
+            DispatchQueue.main.async {
+                self.images = processedUIImages
+                self.collectionView.reloadData()
+                let diff = CFAbsoluteTimeGetCurrent() - start
+                print("Обработка (\(filter), \(qos)) заняла \(diff) секунд")
+            }
         }
     }
         
@@ -177,20 +191,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
         8.0
-    }
-}
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        DispatchQueue.main.async {
-            for image in images {
-                let insertIndex = self.images.count
-                self.images.append(image)
-                let indexPath = IndexPath(item: insertIndex, section: 0)
-                self.collectionView.performBatchUpdates({
-                    self.collectionView.insertItems(at: [indexPath])
-                }, completion: nil)
-            }
-        }
     }
 }
