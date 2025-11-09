@@ -6,18 +6,13 @@
 //
 import Foundation
 
-enum AppConfiguration: String {
+enum AppConfiguration: String, CaseIterable {
     case people = "https://swapi.dev/api/people/8"
     case starships = "https://swapi.dev/api/starships/3"
     case planets = "https://swapi.dev/api/planets/5"
     
     static func getRandom() -> AppConfiguration {
-        let configurations: [AppConfiguration] = [
-            .people,
-            .starships,
-            .planets
-        ]
-        return configurations.randomElement()!
+        self.allCases.randomElement()!
     }
 }
 
@@ -50,6 +45,61 @@ struct NetworkService {
                 print("📦 Ответ сервера:\n\(string)")
             }
             
+        }
+        task.resume()
+    }
+    
+    static func getToDoTask(completion: ((String?) -> Void)?) {
+        let session = URLSession.shared
+        let url = URL(string: "https://jsonplaceholder.typicode.com/todos/")!
+        let task = session.dataTask(with: url) { data, response, error in
+            if error != nil {
+                print("error connection")
+                return
+            }
+            if let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode != 200 {
+                print("error response")
+                return
+            }
+            guard let data else {
+                print("something wrong with data")
+                return
+            }
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
+                print(jsonObject)
+                if let firstItem = jsonObject.first {
+                    completion?(firstItem["title"] as? String)
+                }
+            } catch {
+                print("something wrong with data")
+            }
+        }
+        task.resume()
+    }
+    
+    static func getPlanetData(completion: ((String?) -> Void)?) {
+        let session = URLSession.shared
+        let url = URL(string: "https://swapi.dev/api/planets/1")!
+        let task = session.dataTask(with: url) { data, response, error in
+            if error != nil {
+                print("error connection")
+                return
+            }
+            if let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode != 200 {
+                print("error response")
+                return
+            }
+            guard let data else {
+                print("something wrong with data")
+                return
+            }
+            do {
+                let planet = try JSONDecoder().decode(Planet.self, from: data)
+                completion?(planet.orbital_period)
+            } catch {
+                print("something wrong with data")
+            }
         }
         task.resume()
     }
