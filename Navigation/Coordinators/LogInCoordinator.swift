@@ -22,7 +22,30 @@ class LogInCoordinator: Coordinator {
         loginViewController.onLoginSuccess = { [weak self] user in
             self?.showProfile(for: user)
         }
+        loginViewController.onSignUP = { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.showSignUp()
+        }
+        
         navigationController.viewControllers = [loginViewController]
+    }
+    
+    func showSignUp() {
+        let signUpVC = RegistrationViewController()
+        signUpVC.hidesBottomBarWhenPushed = true
+        signUpVC.onLogin = { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.backToLogin()
+        }
+        navigationController.pushViewController(signUpVC, animated: true)
+    }
+    
+    func backToLogin() {
+        navigationController.popViewController(animated: true)
     }
     
     func showProfile(for user: User) {
@@ -32,6 +55,7 @@ class LogInCoordinator: Coordinator {
         }
         navigationController.pushViewController(profileViewController, animated: true)
     }
+    
     
     func showPhotos() {
         let photoView = PhotosViewController()
