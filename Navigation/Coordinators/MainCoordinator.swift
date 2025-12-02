@@ -29,8 +29,11 @@ class MainCoordinator: Coordinator {
     func start() {
         let feedNav = UINavigationController()
         let loginNav = UINavigationController()
+        let savedPostNav = UINavigationController(rootViewController: SavedPostTableViewController())
+        
         feedCoordinator = FeedCoordinator(navigationController: feedNav)
         loginCoordinaor = LogInCoordinator(navigationController: loginNav)
+        
         
         feedCoordinator?.start()
         loginCoordinaor?.start()
@@ -46,8 +49,13 @@ class MainCoordinator: Coordinator {
             image: UIImage(systemName: "person"),
             selectedImage: UIImage(systemName: "person.fill")
         )
+        savedPostNav.tabBarItem = UITabBarItem(
+            title: "Saved",
+            image: UIImage(systemName: "bookmark"),
+            selectedImage: UIImage(systemName: "bookmark.fill")
+        )
         
-        tabBarController.viewControllers = [feedNav, loginNav]
+        tabBarController.viewControllers = [feedNav, loginNav, savedPostNav]
         tabBarController.selectedIndex = 0
         navigationController.viewControllers = [tabBarController]
     }
