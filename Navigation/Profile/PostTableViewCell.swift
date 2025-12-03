@@ -10,6 +10,7 @@ import StorageService
 
 class PostTableViewCell: UITableViewCell {
     var post: Post?
+    var onCoreSave: ((Post) -> Void)?
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
@@ -115,7 +116,8 @@ class PostTableViewCell: UITableViewCell {
     @objc func doubleTapPost() {
         print("Double tap")
         if let post = post {
-            CoreDataManager.shared.addPost(post)
+//            CoreDataManager.shared.addPost(post)
+            onCoreSave?(post)
         }
     }
     
