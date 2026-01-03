@@ -32,6 +32,8 @@ class MainCoordinator: Coordinator {
         let vm = SavedPostViewModel()
         let savedPostNav = UINavigationController(rootViewController: SavedPostTableViewController(viewModel: vm))
         
+        let geoNav = UINavigationController(rootViewController: GeolocationViewController())
+        
         feedCoordinator = FeedCoordinator(navigationController: feedNav)
         loginCoordinaor = LogInCoordinator(navigationController: loginNav)
         
@@ -55,8 +57,14 @@ class MainCoordinator: Coordinator {
             image: UIImage(systemName: "bookmark"),
             selectedImage: UIImage(systemName: "bookmark.fill")
         )
+        geoNav.tabBarItem = UITabBarItem(
+            title: "map",
+            image: UIImage(systemName: "map"),
+            selectedImage: UIImage(systemName: "map.fill")
+        )
         
-        tabBarController.viewControllers = [feedNav, loginNav, savedPostNav]
+        
+        tabBarController.viewControllers = [geoNav, feedNav, loginNav, savedPostNav]
         tabBarController.selectedIndex = 0
         navigationController.viewControllers = [tabBarController]
     }
