@@ -8,6 +8,10 @@ import UIKit
 import iOSIntPackage
 
 class PhotosViewController: UIViewController {
+    private enum LocalizedKeys: String {
+        case title = "title-photos-vc"
+    }
+    
     private var images: [UIImage] = []
     private var imagePublisherFacade: ImagePublisherFacade?
     private var isSubscribed = false
@@ -83,7 +87,7 @@ class PhotosViewController: UIViewController {
         
     private func setupView() {
         view.backgroundColor = .systemBackground
-        title = "Photo Gallery"
+        title = ~LocalizedKeys.title.rawValue
     }
 
     private func setupSubviews() {

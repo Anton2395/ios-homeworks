@@ -1,0 +1,36 @@
+// TAB BAR
+"feed-nav-bar-title" = "Feed";
+"profile-nav-bar-title" = "Profile";
+"saved-nav-bar-title" = "Saved";
+"map-nav-bar-title" = "Map";
+
+// MAP VC
+"name-point-anatation" = "Minsk";
+
+// LOGIN VC
+"email-place-holder-login-vc" = "Email";
+"password-place-holder-login-vc" = "Password";
+"title-button-login-login-vc" = "Log In";
+"title-button-sign-up-login-vc" = "Sign Up";
+"input-title-error-massage-login-vc" = "Input error";
+"input-description-error-massage-login-vc" = "All fields have to be filled";
+"login-title-error-massage-login-vc" = "Login error";
+"login-description-error-massage-login-vc" = "Wrong username";
+
+// PHOTO VC
+"title-photos-vc" = "Photo Gallery";
+
+// REGISTRATION VC
+"filled-fields-message-reg-vc" = "All fields should be filled.";
+"error-title-alert-reg-vc" = "Error";
+"name-form-reg-vc" = "Registration";
+"full-name-placeholder-reg-vc" = "Full name";
+"back-button-reg-vc" = "Back";
+"email-is-used-error-reg-vc" = "This email alrady used.";
+"wrong-email-error-reg-vc" = "Wrong email format.";
+"short-password-error-reg-vc" = "Password is short (need more then 6 symbals).";
+"network-error-reg-vc" = "Problem with network connection.";
+"save-db-error-reg-vc" = "Error with saving user's data to db.";
+"read-user-data-error-reg-vc" = "Error while process user's data.";
+"something-wrong-error-reg-vc" = "Unknown error. Try one more time.";
+"just-error-reg-vc" = "Registration error.";

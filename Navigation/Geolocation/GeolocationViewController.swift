@@ -9,6 +9,9 @@ import UIKit
 import MapKit
 
 class GeolocationViewController: UIViewController {
+    private enum LocalizedKeys: String {
+        case namePointAnatation = "name-point-anatation"
+    }
     
     let geoView: MKMapView = {
         let view = MKMapView()
@@ -38,7 +41,7 @@ class GeolocationViewController: UIViewController {
         
         let anatation = MKPointAnnotation()
         anatation.coordinate = CLLocationCoordinate2D(latitude: 53.9, longitude: 27.5667)
-        anatation.title = "Minsk"
+        anatation.title = ~LocalizedKeys.namePointAnatation.rawValue
         geoView.addAnnotation(anatation)
         
         locationManager.delegate = self

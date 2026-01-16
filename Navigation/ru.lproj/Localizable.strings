@@ -1,0 +1,36 @@
+// TAB BAR
+"feed-nav-bar-title" = "Лента";
+"profile-nav-bar-title" = "Профиль";
+"saved-nav-bar-title" = "Сохранённые";
+"map-nav-bar-title" = "Карта";
+
+// MAP VC
+"name-point-anatation" = "Минск";
+
+// LOGIN VC
+"email-place-holder-login-vc" = "Почта";
+"password-place-holder-login-vc" = "Пароль";
+"title-button-login-login-vc" = "Войти";
+"title-button-sign-up-login-vc" = "Создать";
+"input-title-error-massage-login-vc" = "Ошибка ввода";
+"input-description-error-massage-login-vc" = "Поля должны быть заполнены";
+"login-title-error-massage-login-vc" = "Ошибка входа";
+"login-description-error-massage-login-vc" = "Неверное имя пользователя";
+
+// PHOTO VC
+"title-photos-vc" = "Фото галерея";
+
+// REGISTRATION VC
+"filled-fields-message-reg-vc" = "Поля должны быть заполнены.";
+"error-title-alert-reg-vc" = "Ошибка";
+"name-form-reg-vc" = "Регистрация";
+"full-name-placeholder-reg-vc" = "Полное имя";
+"back-button-reg-vc" = "Назад";
+"email-is-used-error-reg-vc" = "Этот email уже зарегистрирован.";
+"wrong-email-error-reg-vc" = "Некорректный формат email.";
+"short-password-error-reg-vc" = "Слишком простой пароль (минимум 6 символов).";
+"network-error-reg-vc" = "Проблема с интернет-соединением.";
+"save-db-error-reg-vc" = "Не удалось сохранить данные пользователя в базу.";
+"read-user-data-error-reg-vc" = "Ошибка при обработке данных пользователя.";
+"something-wrong-error-reg-vc" = "Неизвестная ошибка. Попробуйте позже.";
+"just-error-reg-vc" = "Ошибка регистрации.";

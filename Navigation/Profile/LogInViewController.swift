@@ -9,6 +9,16 @@ import UIKit
 
 
 class LogInViewController: UIViewController {
+    private enum LocalizedKeys: String {
+        case emailTextPlaceholder = "email-place-holder-login-vc"
+        case passwordTextPlaceholder = "password-place-holder-login-vc"
+        case loginTitleButton = "title-button-login-login-vc"
+        case signUpTitleButton = "title-button-sign-up-login-vc"
+        case inputTitleErrorMassage = "input-title-error-massage-login-vc"
+        case loginTitleErrorMassage = "login-title-error-massage-login-vc"
+        case inputDesErrorMassage =  "input-description-error-massage-login-vc"
+        case loginDesErrorMassage = "login-description-error-massage-login-vc"
+    }
     
     var loginDelegate: LoginViewControllerDelegate?
     
@@ -39,7 +49,7 @@ class LogInViewController: UIViewController {
     
     private lazy var emailPhoneField: UITextField = { [unowned self] in
         let textField = UITextField()
-        textField.placeholder = "Email"
+        textField.placeholder = ~LocalizedKeys.emailTextPlaceholder.rawValue
         textField.text = "admin@gmail.com"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -66,7 +76,7 @@ class LogInViewController: UIViewController {
     
     private lazy var passwordField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Password"
+        textField.placeholder = ~LocalizedKeys.passwordTextPlaceholder.rawValue
         textField.text = "123456"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -116,7 +126,7 @@ class LogInViewController: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = CustomButton(
-            title: "Log In",
+            title: ~LocalizedKeys.loginTitleButton.rawValue,
             titleColor: .white,
             backgroundColor: UIColor(named: "ColorButton"),
             action: pressedLogin
@@ -127,7 +137,7 @@ class LogInViewController: UIViewController {
     
     private lazy var signUpButton: UIButton = {
         let button = CustomButton(
-            title: "Sign Up",
+            title: ~LocalizedKeys.signUpTitleButton.rawValue,
             titleColor: .systemGray,
             backgroundColor: UIColor.systemBackground,
             action: pressedSignUp
@@ -172,8 +182,8 @@ class LogInViewController: UIViewController {
             try self.processLogin()
         } catch ApiError.emptyField {
             let alert = UIAlertController(
-                title: "Ошибка ввода",
-                message: "Поля должны быть заполнены",
+                title: ~LocalizedKeys.inputTitleErrorMassage.rawValue,
+                message: ~LocalizedKeys.inputDesErrorMassage.rawValue,
                 preferredStyle: .alert
             )
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -181,8 +191,8 @@ class LogInViewController: UIViewController {
             return
         } catch ApiError.wrongPassword {
             let alert = UIAlertController(
-                title: "Ошибка входа",
-                message: "Неверное имя пользователя",
+                title: ~LocalizedKeys.loginTitleErrorMassage.rawValue,
+                message: ~LocalizedKeys.loginDesErrorMassage.rawValue,
                 preferredStyle: .alert
             )
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -206,8 +216,8 @@ class LogInViewController: UIViewController {
                 self.onLoginSuccess?(user)
             } else {
                 let alert = UIAlertController(
-                    title: "Ошибка входа",
-                    message: "Неверное имя пользователя",
+                    title: ~LocalizedKeys.loginTitleErrorMassage.rawValue,
+                    message: ~LocalizedKeys.loginDesErrorMassage.rawValue,
                     preferredStyle: .alert
                 )
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
