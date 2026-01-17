@@ -9,6 +9,8 @@ import UIKit
 import StorageService
 
 class PostTableViewCell: UITableViewCell {
+    var post: Post?
+    
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -57,6 +59,14 @@ class PostTableViewCell: UITableViewCell {
         tuneView()
         addSubview()
         setConstraints()
+        
+        let doubleTap = UITapGestureRecognizer()
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.addTarget(self, action: #selector(doubleTapPost))
+        addGestureRecognizer(doubleTap)
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -102,7 +112,15 @@ class PostTableViewCell: UITableViewCell {
         ])
     }
     
+    @objc func doubleTapPost() {
+        print("Double tap")
+        if let post = post {
+            CoreDataManager.shared.addPost(post)
+        }
+    }
+    
     func update(_ post: Post) {
+        self.post = post
         authorLabel.text = post.author
         imagePostView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
