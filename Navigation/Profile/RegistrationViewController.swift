@@ -9,12 +9,28 @@ import FirebaseAuth
 
 
 class RegistrationViewController: UIViewController {
+    private enum LocalizedKeys: String {
+        case filledFieldsMessage = "filled-fields-message-reg-vc"
+        case errorTitleAlert = "error-title-alert-reg-vc"
+        case nameForm = "name-form-reg-vc"
+        case emailPlaceholder = "email-place-holder-login-vc"
+        case passwordPlaceholder = "password-place-holder-login-vc"
+        case fullNamePlaceholder = "full-name-placeholder-reg-vc"
+        case signUpButton = "title-button-sign-up-login-vc"
+        case backButton = "back-button-reg-vc"
+        
+        case emailError = "email-is-used-error-reg-vc"
+        case emailFormatError = "wrong-email-error-reg-vc"
+        case shortPasswordError = "short-password-error-reg-vc"
+        case networkError = "network-error-reg-vc"
+        case saveDbError = "save-db-error-reg-vc"
+        case readDataError = "read-user-data-error-reg-vc"
+        case someError = "something-wrong-error-reg-vc"
+        case errorTitle = "just-error-reg-vc"
+    }
+    
     var onLogin: (() -> Void)?
     
-    enum AlertErrorField: String {
-        case emptyField = "Поля должны быть заполнены."
-        case somethingWrong = "Что-то не то."
-    }
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -34,7 +50,7 @@ class RegistrationViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Registration"
+        label.text = ~LocalizedKeys.nameForm.rawValue
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         return label
@@ -42,7 +58,7 @@ class RegistrationViewController: UIViewController {
         
     private lazy var emailField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Email"
+        textField.placeholder = ~LocalizedKeys.emailPlaceholder.rawValue
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.emailAddress
@@ -66,7 +82,7 @@ class RegistrationViewController: UIViewController {
     
     private lazy var passwordField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Password"
+        textField.placeholder = ~LocalizedKeys.passwordPlaceholder.rawValue
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -92,7 +108,7 @@ class RegistrationViewController: UIViewController {
     
     private lazy var fullNameField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Full name"
+        textField.placeholder = ~LocalizedKeys.fullNamePlaceholder.rawValue
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -116,7 +132,7 @@ class RegistrationViewController: UIViewController {
     
     private lazy var signUpButton: UIButton = {
         let button = CustomButton(
-            title: "Sign Up",
+            title: ~LocalizedKeys.signUpButton.rawValue,
             titleColor: .systemGray,
             backgroundColor: UIColor.systemBackground,
             action: pressedSignUp
@@ -129,7 +145,7 @@ class RegistrationViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let button = CustomButton(
-            title: "Back",
+            title: ~LocalizedKeys.backButton.rawValue,
             titleColor: .white,
             backgroundColor: UIColor.systemGray,
             action: pressedBack
@@ -142,7 +158,7 @@ class RegistrationViewController: UIViewController {
     
     func pressedSignUp() {
         guard let email = emailField.text, let password = passwordField.text, let fullName = fullNameField.text else {
-            showAlert(.emptyField)
+            showAlert(~LocalizedKeys.filledFieldsMessage.rawValue)
             return
         }
         
@@ -235,10 +251,10 @@ class RegistrationViewController: UIViewController {
         ])
     }
     
-    func showAlert(_ alertType: AlertErrorField) {
+    func showAlert(_ alertMessage: String) {
         let alert = UIAlertController(
-            title: "Ошибка",
-            message: alertType.rawValue,
+            title: ~LocalizedKeys.errorTitleAlert.rawValue,
+            message: alertMessage,
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -253,28 +269,28 @@ class RegistrationViewController: UIViewController {
             let nsError = authError as NSError
             switch nsError.code {
             case AuthErrorCode.emailAlreadyInUse.rawValue:
-                message = "Этот email уже зарегистрирован."
+                message = ~LocalizedKeys.emailError.rawValue
             case AuthErrorCode.invalidEmail.rawValue:
-                message = "Некорректный формат email."
+                message = ~LocalizedKeys.emailFormatError.rawValue
             case AuthErrorCode.weakPassword.rawValue:
-                message = "Слишком простой пароль (минимум 6 символов)."
+                message = ~LocalizedKeys.shortPasswordError.rawValue
             case AuthErrorCode.networkError.rawValue:
-                message = "Проблема с интернет-соединением."
+                message = ~LocalizedKeys.networkError.rawValue
             default:
                 message = nsError.localizedDescription
             }
             
         case .firestoreError:
-            message = "Не удалось сохранить данные пользователя в базу."
+            message = ~LocalizedKeys.saveDbError.rawValue
             
         case .encodingError:
-            message = "Ошибка при обработке данных пользователя."
+            message = ~LocalizedKeys.readDataError.rawValue
             
         case .unknown:
-            message = "Неизвестная ошибка. Попробуйте позже."
+            message = ~LocalizedKeys.someError.rawValue
         }
         
-        let alert = UIAlertController(title: "Ошибка регистрации", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: ~LocalizedKeys.errorTitle.rawValue, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alert, animated: true)
     }

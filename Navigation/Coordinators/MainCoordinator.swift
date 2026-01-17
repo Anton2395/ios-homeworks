@@ -14,6 +14,13 @@ protocol Coordinator {
 
 
 class MainCoordinator: Coordinator {
+    private enum LocalizedKeys: String {
+        case feedNavTitle = "feed-nav-bar-title"
+        case profileNavTitle = "profile-nav-bar-title"
+        case savedNavTitle = "saved-nav-bar-title"
+        case mapNavTitle = "map-nav-bar-title"
+    }
+    
     var navigationController: UINavigationController
     private var tabBarController: UITabBarController
     
@@ -43,22 +50,22 @@ class MainCoordinator: Coordinator {
         
     
         feedNav.tabBarItem =  UITabBarItem(
-            title: "Лента",
+            title: ~LocalizedKeys.feedNavTitle.rawValue,
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )
         loginNav.tabBarItem = UITabBarItem(
-            title: "Профиль",
+            title: ~LocalizedKeys.profileNavTitle.rawValue,
             image: UIImage(systemName: "person"),
             selectedImage: UIImage(systemName: "person.fill")
         )
         savedPostNav.tabBarItem = UITabBarItem(
-            title: "Saved",
+            title: ~LocalizedKeys.savedNavTitle.rawValue,
             image: UIImage(systemName: "bookmark"),
             selectedImage: UIImage(systemName: "bookmark.fill")
         )
         geoNav.tabBarItem = UITabBarItem(
-            title: "map",
+            title: ~LocalizedKeys.mapNavTitle.rawValue,
             image: UIImage(systemName: "map"),
             selectedImage: UIImage(systemName: "map.fill")
         )
