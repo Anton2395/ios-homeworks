@@ -6,26 +6,36 @@
 //
 
 import UIKit
+import CoreData
+import StorageService
+
 
 class SavedPostTableViewController: UITableViewController {
     
     var viewModel: SavedPostViewModel
-//    var posts = CoreDataManager.shared.fetchPosts()
+    
+    lazy var fetchResultController = {
+        let request = SavedPost.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "author", ascending: true)
+        ]
+        let fetchController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        fetchController.delegate = self
+        return fetchController
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        posts = CoreDataManager.shared.fetchPosts()
-        viewModel.fetchPosts()
-        navigationItem.rightBarButtonItem?.isHidden = true
-//        tableView.reloadData()
     }
     
     init(viewModel: SavedPostViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.postChangesBlock = { [weak self] in
-            self?.tableView.reloadData()
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +47,7 @@ class SavedPostTableViewController: UITableViewController {
         view.backgroundColor = .systemBackground
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell_ReuseID")
         setupNavigation()
+        try? fetchResultController.performFetch()
     }
     
     func setupNavigation() {
@@ -55,7 +66,10 @@ class SavedPostTableViewController: UITableViewController {
         let confirmAction = UIAlertAction(title: "Enter", style: .default) { [weak self](_) in
 
             let author = alert.textFields?[0].text ?? ""
-            self?.viewModel.fetchAuthorPosts(of: author)
+            self?.fetchResultController.fetchRequest.predicate = NSPredicate(format: "author == %@", author)
+
+            try? self?.fetchResultController.performFetch()
+            self?.tableView.reloadData()
             self?.navigationItem.rightBarButtonItem?.isHidden = false
         }
         alert.addAction(confirmAction)
@@ -63,12 +77,14 @@ class SavedPostTableViewController: UITableViewController {
     }
     
     @objc func cleanFilter() {
-        viewModel.fetchPosts()
+        fetchResultController.fetchRequest.predicate = nil
+        try? fetchResultController.performFetch()
+        tableView.reloadData()
         navigationItem.rightBarButtonItem?.isHidden = true
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.posts.count
+        return fetchResultController.sections?[section].numberOfObjects ?? 0
     }
 
     
@@ -79,15 +95,20 @@ class SavedPostTableViewController: UITableViewController {
         ) as? PostTableViewCell else {
             fatalError("could not dequeueReusableCell")
         }
+        let post = fetchResultController.object(at: indexPath)
         
-        
-        cell.update(viewModel.posts[indexPath.row])
+        cell.update(Post(
+            author: post.author ?? "",
+            description: post.pDescription ?? "",
+            image: post.image ?? "",
+            likes: 0,
+            views: 0
+        ))
         return cell
     }
     
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
@@ -95,38 +116,34 @@ class SavedPostTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            CoreDataManager.shared.deletePost(posts[indexPath.row])
-            viewModel.deletePost(indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let object = fetchResultController.object(at: indexPath)
+            viewModel.deletePost(object)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+}
+
+extension SavedPostTableViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<any NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        case .update:
+            tableView.reloadData()
+        @unknown default:
+            break
+        }
+    }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        tableView.beginUpdates()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -46,24 +46,10 @@ class SavedPostViewModel {
         }
     }
     
-    func deletePost(_ index: Int) {
-        let post = posts[index]
-        let request = SavedPost.fetchRequest()
-        request.predicate = NSPredicate(
-            format: "author == %@ AND pDescription == %@",
-            post.author,
-            post.description
-        )
-        persistentContainer.performBackgroundTask { [weak self] backContext in
-            let temp_posts = (try? backContext.fetch(request)) ?? []
-            for old_post in temp_posts {
-                backContext.delete(old_post)
-            }
-            try? backContext.save()
-            DispatchQueue.main.async {
-                self?.fetchPosts()
-            }
-        }
+    func deletePost(_ object: SavedPost) {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        context.delete(object)
+        try? context.save()
     }
     
     
