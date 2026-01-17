@@ -29,7 +29,8 @@ class MainCoordinator: Coordinator {
     func start() {
         let feedNav = UINavigationController()
         let loginNav = UINavigationController()
-        let savedPostNav = UINavigationController(rootViewController: SavedPostTableViewController())
+        let vm = SavedPostViewModel()
+        let savedPostNav = UINavigationController(rootViewController: SavedPostTableViewController(viewModel: vm))
         
         feedCoordinator = FeedCoordinator(navigationController: feedNav)
         loginCoordinaor = LogInCoordinator(navigationController: loginNav)

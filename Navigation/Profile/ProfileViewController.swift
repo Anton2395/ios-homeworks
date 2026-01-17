@@ -57,6 +57,9 @@ class ProfileViewController: UIViewController {
     init(user: User) {
         self.viewModel = ProfileViewModel(user: user)
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.onShowAlert = { [weak self] title, message in
+            self?.showAlert(title: title, message: message)
+        }
         headerView.setupUserParam(user: user)
     }
     
@@ -241,6 +244,16 @@ class ProfileViewController: UIViewController {
     @objc func updatePosts() {
         viewModel.updatePosts()
     }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -273,6 +286,12 @@ extension ProfileViewController: UITableViewDataSource {
             
             if let post = viewModel.post(at: indexPath) {
                 cell.update(post)
+                cell.onCoreSave = { [weak self] post in
+                    guard let self = self else {
+                        return
+                    }
+                    viewModel.addPost(post)
+                }
             }
             return cell
         default:
