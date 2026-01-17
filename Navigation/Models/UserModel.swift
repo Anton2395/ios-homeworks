@@ -6,6 +6,8 @@
 //
 import UIKit
 
+import FirebaseFirestore
+
 
 protocol UserService {
     var user: User { get set }
@@ -14,7 +16,8 @@ protocol UserService {
 
 extension UserService {
     func logIn(name: String) -> User? {
-        return user.name == name ? user : nil
+//        return user.name == name ? user : nil
+        return user
     }
 }
 
@@ -33,6 +36,21 @@ class User {
     }
 }
 
+struct UserExtensions: Codable {
+    @DocumentID var id: String?
+    var fullName: String
+    var imageName: String
+    var status: String
+    var userId: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fullName = "full_name"
+        case imageName = "image_name"
+        case status
+        case userId = "user_id"
+    }
+}
 
 class CurrentUserService: UserService {
     var user = User(
@@ -45,7 +63,7 @@ class CurrentUserService: UserService {
 
 class TestUserService: UserService {
     var user = User(
-        name: "admin",
+        name: "admin@gmail.com",
         fullName: "Test User",
         image: UIImage(systemName: "person.fill"),
         status: "Debug mode user"

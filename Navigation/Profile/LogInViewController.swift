@@ -13,6 +13,7 @@ class LogInViewController: UIViewController {
     var loginDelegate: LoginViewControllerDelegate?
     
     var onLoginSuccess: ((User) -> Void)?
+    var onSignUP: (() -> Void)?
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -38,8 +39,8 @@ class LogInViewController: UIViewController {
     
     private lazy var emailPhoneField: UITextField = { [unowned self] in
         let textField = UITextField()
-        textField.placeholder = "Email or phone"
-        textField.text = "admin"
+        textField.placeholder = "Email"
+        textField.text = "admin@gmail.com"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -66,7 +67,7 @@ class LogInViewController: UIViewController {
     private lazy var passwordField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-        textField.text = "12345"
+        textField.text = "123456"
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -124,6 +125,19 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var signUpButton: UIButton = {
+        let button = CustomButton(
+            title: "Sign Up",
+            titleColor: .systemGray,
+            backgroundColor: UIColor.systemBackground,
+            action: pressedSignUp
+        )
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = UIColor(named: "ColorButton")?.cgColor
+        button.layer.borderWidth = 1
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -178,14 +192,28 @@ class LogInViewController: UIViewController {
         }
     }
     
+    func pressedSignUp() {
+        onSignUP?()
+    }
+    
     func processLogin() throws {
         guard let login = emailPhoneField.text, let password = passwordField.text else {
             throw ApiError.emptyField
         }
-        if let user = loginDelegate?.check(login: login, password: password) {
-            onLoginSuccess?(user)
-        } else {
-            throw ApiError.wrongPassword
+        loginDelegate?.check(login: login, password: password) { [weak self] user in
+            guard let self = self else { return }
+            if let user = user {
+                self.onLoginSuccess?(user)
+            } else {
+                let alert = UIAlertController(
+                    title: "Ошибка входа",
+                    message: "Неверное имя пользователя",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                present(alert, animated: true)
+            }
+            
         }
     }
     
@@ -207,6 +235,7 @@ class LogInViewController: UIViewController {
         contentView.addSubview(textFieldsStackView)
         
         contentView.addSubview(loginButton)
+        contentView.addSubview(signUpButton)
         
     }
     
@@ -246,7 +275,12 @@ class LogInViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginButton.heightAnchor.constraint(equalToConstant: 50)
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
+            signUpButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
+            signUpButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
+            signUpButton.heightAnchor.constraint(equalTo: loginButton.heightAnchor)
             
         ])
     }
