@@ -10,7 +10,7 @@ class PhotoTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Photo"
-        label.textColor = .black
+        label.textColor = .photoTableTitleCell
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -21,7 +21,7 @@ class PhotoTableViewCell: UITableViewCell {
         let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
         let image = UIImage(systemName: "arrow.right", withConfiguration: config)
         button.setImage(image, for: .normal)
-        button.tintColor = .black
+        button.tintColor = .photoTableTitleCell
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -64,7 +64,7 @@ class PhotoTableViewCell: UITableViewCell {
     }
     
     func tuneView() {
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .photoTableCell
         accessoryType = .none
     }
     

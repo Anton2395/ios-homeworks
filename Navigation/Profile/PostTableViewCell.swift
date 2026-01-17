@@ -15,7 +15,7 @@ class PostTableViewCell: UITableViewCell {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = .postMainTextCell
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +41,7 @@ class PostTableViewCell: UITableViewCell {
     private lazy var likeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = .postMainTextCell
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +49,7 @@ class PostTableViewCell: UITableViewCell {
     private lazy var viewsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = .postMainTextCell
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -75,7 +75,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func tuneView() {
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .postBackCell
         accessoryType = .none
     }
     

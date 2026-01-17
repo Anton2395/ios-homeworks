@@ -61,11 +61,11 @@ class LogInViewController: UIViewController {
         textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 1))
         textField.rightViewMode = .always
         
-        textField.textColor = .black
+        textField.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.autocapitalizationType = .none
         
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         textField.isUserInteractionEnabled = true
         
         textField.delegate = self
@@ -88,11 +88,11 @@ class LogInViewController: UIViewController {
         textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 1))
         textField.rightViewMode = .always
         
-        textField.textColor = .black
+        textField.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.autocapitalizationType = .none
         
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         
         textField.isSecureTextEntry = true
         
@@ -113,6 +113,7 @@ class LogInViewController: UIViewController {
         stackView.layer.cornerRadius = 10
         stackView.layer.borderWidth = 0.5
         stackView.layer.borderColor = UIColor.lightGray.cgColor
+        stackView.clipsToBounds = true
         return stackView
     }()
     
@@ -142,6 +143,7 @@ class LogInViewController: UIViewController {
             backgroundColor: UIColor.systemBackground,
             action: pressedSignUp
         )
+        button.backgroundColor = UIColor.createColor(lightMode: .systemBackground, darkMode: .systemGray6)
         button.layer.cornerRadius = 10
         button.layer.borderColor = UIColor(named: "ColorButton")?.cgColor
         button.layer.borderWidth = 1
