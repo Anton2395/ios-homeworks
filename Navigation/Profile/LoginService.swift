@@ -45,7 +45,13 @@ final class Checker {
             if let auth = authResult {
                 self.db.whereField("user_id", isEqualTo: auth.user.uid).getDocuments { snapshot, error in
                     guard let document = snapshot?.documents.first else {
-                        completion(nil)
+//                        completion(nil)
+                        completion(User(
+                            name: "",
+                            fullName: "",
+                            image: UIImage(named: ""),
+                            status: ""
+                        ))
                         return
                     }
                     do {

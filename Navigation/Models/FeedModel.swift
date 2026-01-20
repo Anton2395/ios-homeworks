@@ -10,3 +10,10 @@ class FeedModel {
     
     func check(word: String) -> Bool { secretWord == word }
 }
+
+
+protocol FeedModelProtocol {
+    func check(word: String) -> Bool
+}
+
+extension FeedModel: FeedModelProtocol {}

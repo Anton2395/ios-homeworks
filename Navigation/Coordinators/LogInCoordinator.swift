@@ -18,7 +18,11 @@ class LogInCoordinator: Coordinator {
     
     func start() {
         let loginViewController = LogInViewController()
-        loginViewController.loginDelegate = loginFactory.makeLoginInspector()
+
+        let loginService = loginFactory.makeLoginInspector()
+        loginViewController.viewModel = LoginViewModel(loginService: loginService)
+        
+        
         loginViewController.onLoginSuccess = { [weak self] user in
             self?.showProfile(for: user)
         }
