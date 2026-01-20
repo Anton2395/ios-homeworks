@@ -14,7 +14,7 @@ class ProfileHeaderView: UIView {
         imageView.image = UIImage(named: "Avatar")
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.avatarBorder.cgColor
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -27,7 +27,7 @@ class ProfileHeaderView: UIView {
         let label = UILabel()
         label.text = "My name"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
+        label.textColor = .fullNameColorText
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -70,7 +70,7 @@ class ProfileHeaderView: UIView {
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         
-        textField.backgroundColor = .white
+        textField.backgroundColor = .statusField
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
@@ -101,7 +101,8 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupViews() {
-        backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+        backgroundColor = UIColor.headerProfileBack
+        
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(setStatusButton)

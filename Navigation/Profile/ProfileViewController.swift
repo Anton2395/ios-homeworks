@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+        tableView.backgroundColor = .headerProfileBack
         
         return tableView
     }()
@@ -185,7 +185,7 @@ class ProfileViewController: UIViewController {
     }
     
     func setupView() {
-        view.backgroundColor = UIColor(_colorLiteralRed: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+        view.backgroundColor = .systemBackground
         
 //        #if DEBUG
 //        view.backgroundColor = .systemGreen
