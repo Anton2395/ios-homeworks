@@ -21,13 +21,13 @@ class SavedPostViewModel {
         let request = SavedPost.fetchRequest()
         persistentContainer.performBackgroundTask { [weak self] backContext in
             let result = (try? backContext.fetch(request)) ?? []
-            let mapped = result.map {
-                Post(author: $0.author ?? "", description: $0.pDescription ?? "", image: $0.image ?? "", likes: 0, views: 0)
-            }
-            DispatchQueue.main.async {
-                self?.posts = mapped
-                self?.postChangesBlock?()
-            }
+//            let mapped = result.map {
+//                Post(author: $0.author ?? "", description: $0.pDescription ?? "", image: $0.image ?? "", likes: 0, views: 0)
+//            }
+//            DispatchQueue.main.async {
+//                self?.posts = mapped
+//                self?.postChangesBlock?()
+//            }
         }
     }
     
@@ -36,13 +36,13 @@ class SavedPostViewModel {
         request.predicate = NSPredicate(format: "author == %@", author)
         persistentContainer.performBackgroundTask { [weak self] backContext in
             let result = (try? backContext.fetch(request)) ?? []
-            let mapped = result.map {
-                Post(author: $0.author ?? "", description: $0.pDescription ?? "", image: $0.image ?? "", likes: 0, views: 0)
-            }
-            DispatchQueue.main.async {
-                self?.posts = mapped
-                self?.postChangesBlock?()
-            }
+//            let mapped = result.map {
+//                Post(author: $0.author ?? "", description: $0.pDescription ?? "", image: $0.image ?? "", likes: 0, views: 0)
+//            }
+//            DispatchQueue.main.async {
+//                self?.posts = mapped
+//                self?.postChangesBlock?()
+//            }
         }
     }
     

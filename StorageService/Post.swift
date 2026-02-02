@@ -4,15 +4,16 @@
 //
 //  Created by Toha Shilin on 25.07.25.
 //
+import UIKit
 
 public struct Post {
     public let author: String
     public let description: String
-    public let image: String
+    public let image: UIImage?
     public var likes: Int
     public var views: Int
     
-    public init(author: String, description: String, image: String, likes: Int, views: Int) {
+    public init(author: String, description: String, image: UIImage?, likes: Int, views: Int) {
         self.author = author
         self.description = description
         self.image = image
@@ -31,7 +32,7 @@ extension Post {
                 
                 JACKBOYS — группа, в которую входит Travis Scott и артисты его лейбла Cactus Jack (среди них Don Toliver, Sheck Wes, SoFaygo и Wallie The Sensei). Всего в альбом вошло 17 песен, среди них коллабы с GloRilla, Tyla, 21 Savage и другими.
                 """,
-                image: "PostFirst",
+                image: UIImage(named: "PostFirst"),
                 likes: 0,
                 views: 10
             ),
@@ -42,7 +43,7 @@ extension Post {
 
                 Восходящий инди-поп музыкант представил новый сингл. Наверняка дело идёт к дебютному альбому, поскольку синглов у артиста накопилось уже прилично.
                 """,
-                image: "PostSecond",
+                image: UIImage(named: "PostSecond"),
                 likes: 0,
                 views: 10
             ),
@@ -55,7 +56,7 @@ extension Post {
 
                 Последний альбом артиста вышел два с половиной года назад. Готовится ли он к новому? Пока непонятно.
                 """,
-                image: "PostThird",
+                image: UIImage(named: "PostThird"),
                 likes: 0,
                 views: 10
             ),
@@ -66,7 +67,7 @@ extension Post {
 
                 Австралийский музыкант выпустил первую за пять лет сольную песню (не считая саундтрека к Барби). В социальных сетях артист написал, что этот сингл открывает эру его пятого альбома.
                 """,
-                image: "PostFourth",
+                image: UIImage(named: "PostFourth"),
                 likes: 0,
                 views: 10
             ),
