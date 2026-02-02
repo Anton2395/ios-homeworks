@@ -22,6 +22,7 @@ class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     
+    var viewModel: LoginViewModel!
     var onLoginSuccess: ((User) -> Void)?
     var onSignUP: (() -> Void)?
     
@@ -153,6 +154,7 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bindViewModel()
         setupView()
         addSubviews()
         setupConstraints()
@@ -170,6 +172,49 @@ class LogInViewController: UIViewController {
         removeKeyboardObservers()
     }
     
+    private func bindViewModel() {
+        viewModel.onStateChange = { [weak self] state in
+            guard let self else { return }
+
+            switch state {
+            case .idle, .loading:
+                break
+
+            case .success(let user):
+                self.onLoginSuccess?(user)
+
+            case .error(let error):
+                self.showError(error)
+            }
+        }
+    }
+    
+    private func showError(_ error: ApiError) {
+        let title: String
+        let message: String
+
+        switch error {
+        case .emptyField:
+            title = ~LocalizedKeys.inputTitleErrorMassage.rawValue
+            message = ~LocalizedKeys.inputDesErrorMassage.rawValue
+
+        case .wrongPassword:
+            title = ~LocalizedKeys.loginTitleErrorMassage.rawValue
+            message = ~LocalizedKeys.loginDesErrorMassage.rawValue
+        case .networkError:
+            title = "Network error"
+            message = "Please check your internet connection and try again."
+        }
+
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alert, animated: true)
+    }
+    
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0.0
         scrollView.contentInset.bottom = keyboardHeight
@@ -178,31 +223,14 @@ class LogInViewController: UIViewController {
     @objc func willHideKeyboard(_ notification: NSNotification) {
         scrollView.contentInset.bottom = 0.0
     }
-    
+
     func pressedLogin() {
-        do {
-            try self.processLogin()
-        } catch ApiError.emptyField {
-            let alert = UIAlertController(
-                title: ~LocalizedKeys.inputTitleErrorMassage.rawValue,
-                message: ~LocalizedKeys.inputDesErrorMassage.rawValue,
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            present(alert, animated: true)
-            return
-        } catch ApiError.wrongPassword {
-            let alert = UIAlertController(
-                title: ~LocalizedKeys.loginTitleErrorMassage.rawValue,
-                message: ~LocalizedKeys.loginDesErrorMassage.rawValue,
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            present(alert, animated: true)
-        } catch {
-            print("Something wrong")
-        }
+        viewModel.login(
+            login: emailPhoneField.text,
+            password: passwordField.text
+        )
     }
+
     
     func pressedSignUp() {
         onSignUP?()

@@ -10,7 +10,7 @@ import UIKit
 class FeedViewController: UIViewController {
     
     let stackView = UIStackView()
-    let model = FeedModel()
+    private let viewModel = FeedViewModel(model: FeedModel())
     
     var onPost: ((PostTemp) -> Void)?
     
@@ -123,18 +123,6 @@ class FeedViewController: UIViewController {
     }
     
     private func checkPassword() {
-        guard let text = passwordTextField.text, !text.isEmpty else {
-            resultLabel.text = "Введите слово!"
-            resultLabel.textColor = .orange
-            return
-        }
-        
-        if model.check(word: text) {
-            resultLabel.text = "Верно ✅"
-            resultLabel.textColor = .systemGreen
-        } else {
-            resultLabel.text = "Неверно ❌"
-            resultLabel.textColor = .systemRed
-        }
+        viewModel.checkPassword(passwordTextField.text)
     }
 }
