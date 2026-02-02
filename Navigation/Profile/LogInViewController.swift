@@ -172,6 +172,19 @@ class LogInViewController: UIViewController {
         removeKeyboardObservers()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let testLocalAut = LocalAuthorizationService()
+        testLocalAut.authorizeIfPossible { status in
+            if status {
+                print("ok")
+            } else {
+                print("bad")
+            }
+        }
+        
+    }
+    
     private func bindViewModel() {
         viewModel.onStateChange = { [weak self] state in
             guard let self else { return }

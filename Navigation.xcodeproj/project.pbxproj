@@ -458,6 +458,7 @@
 				DEVELOPMENT_TEAM = L7FX5B6LUH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = test;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -486,6 +487,7 @@
 				DEVELOPMENT_TEAM = L7FX5B6LUH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = test;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

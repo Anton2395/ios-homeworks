@@ -67,28 +67,28 @@ final class ProfileViewModel {
             post.author,
             post.description
         )
-        CoreDataManager.shared.persistentContainer.performBackgroundTask { [weak self] backContext in
-            let existing = (try? backContext.fetch(request)) ?? []
-            guard existing.isEmpty else {
-                DispatchQueue.main.async {
-                    self?.onShowAlert?("Error", "⚠️ Post already exists, skip saving")
-                }
-                return
-            }
-            let savedPost = SavedPost(context: backContext)
-            savedPost.author = post.author
-            savedPost.pDescription = post.description
-            savedPost.image = post.image
-            do {
-                try backContext.save()
-                DispatchQueue.main.async {
-                    self?.onShowAlert?("Done", "Saved!")
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self?.onShowAlert?("Error", "❌ Duplicate detected or saving error: \(error)")
-                }
-            }
-        }
+//        CoreDataManager.shared.persistentContainer.performBackgroundTask { [weak self] backContext in
+//            let existing = (try? backContext.fetch(request)) ?? []
+//            guard existing.isEmpty else {
+//                DispatchQueue.main.async {
+//                    self?.onShowAlert?("Error", "⚠️ Post already exists, skip saving")
+//                }
+//                return
+//            }
+//            let savedPost = SavedPost(context: backContext)
+//            savedPost.author = post.author
+//            savedPost.pDescription = post.description
+//            savedPost.image = post.image
+//            do {
+//                try backContext.save()
+//                DispatchQueue.main.async {
+//                    self?.onShowAlert?("Done", "Saved!")
+//                }
+//            } catch {
+//                DispatchQueue.main.async {
+//                    self?.onShowAlert?("Error", "❌ Duplicate detected or saving error: \(error)")
+//                }
+//            }
+//        }
     }
 }

@@ -124,7 +124,7 @@ class PostTableViewCell: UITableViewCell {
     func update(_ post: Post) {
         self.post = post
         authorLabel.text = post.author
-        imagePostView.image = UIImage(named: post.image)
+        imagePostView.image = post.image
         descriptionLabel.text = post.description
         likeLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"

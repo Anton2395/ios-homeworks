@@ -100,7 +100,7 @@ class SavedPostTableViewController: UITableViewController {
         cell.update(Post(
             author: post.author ?? "",
             description: post.pDescription ?? "",
-            image: post.image ?? "",
+            image: UIImage(named: post.image ?? ""),
             likes: 0,
             views: 0
         ))
