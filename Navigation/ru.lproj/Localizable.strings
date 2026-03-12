@@ -20,6 +20,10 @@
 // PHOTO VC
 "title-photos-vc" = "Фото галерея";
 
+// PHOTO TABLE PROFILE CELL
+"title-profile-photo-cell" = "Фото";
+"add-post-button-photo-cell" = "+ Добавить пост";
+
 // REGISTRATION VC
 "filled-fields-message-reg-vc" = "Поля должны быть заполнены.";
 "error-title-alert-reg-vc" = "Ошибка";
@@ -34,3 +38,26 @@
 "read-user-data-error-reg-vc" = "Ошибка при обработке данных пользователя.";
 "something-wrong-error-reg-vc" = "Неизвестная ошибка. Попробуйте позже.";
 "just-error-reg-vc" = "Ошибка регистрации.";
+
+// PROFILE VC
+"title-alert-access-photo-profile-vc" = "Нет доступа к фото";
+"description-alert-access-photo-profile-vc" = "Разрешите доступ в настройках";
+"cancel-alert-access-photo-profile-vc" = "Отмена";
+"settings-alert-access-photo-profile-vc" = "Настройки";
+//// HEADER
+"placeholder-status-header-profile-vc" = "Напиши новый статус";
+//// POST CELL
+"views-post-cell-profile-vc" = "Просмотры";
+
+// PHOTO COLLECTION CONTROLLER
+//// FULL SCREEN IMAGE
+"set-avatar-button-full-screen-vc" = "Установить как аватар";
+"delete-button-full-screen-vc" = "Удалить";
+
+// POST FORM VC
+"label-post-form-vc" = "Создать пост";
+"author-post-form-vc" = "Автор";
+"preview-post-form-vc" = "Предпросмотр";
+"likes-post-form-vc" = "Нравится";
+"views-post-form-vc" = "Просмотров";
+"publish-button-post-form-vc" = "Опубликовать";

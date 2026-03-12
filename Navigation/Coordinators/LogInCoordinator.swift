@@ -17,6 +17,19 @@ class LogInCoordinator: Coordinator {
     }
     
     func start() {
+        Checker.shared.loadUser { [weak self] user in
+            guard let self = self else { return }
+
+            if let user {
+                self.showProfile(for: user)
+            } else {
+                self.showLogin()
+            }
+        }
+        
+    }
+    
+    func showLogin() {
         let loginViewController = LogInViewController()
 
         let loginService = loginFactory.makeLoginInspector()
@@ -48,21 +61,37 @@ class LogInCoordinator: Coordinator {
         navigationController.pushViewController(signUpVC, animated: true)
     }
     
+    func logout() {
+        Checker.shared.logout()
+        start()
+    }
+    
     func backToLogin() {
         navigationController.popViewController(animated: true)
     }
     
     func showProfile(for user: User) {
-        let profileViewController = ProfileViewController(user: user)
-        profileViewController.showPhotosCollection = { [weak self] in
-            self?.showPhotos()
+        let viewModel = ProfileViewModel(user: user)
+        let profileViewController = ProfileViewController(viewModel: viewModel)
+        
+        profileViewController.showPhotosCollection = { [weak self] userImage in
+            self?.showPhotos(userImage: userImage) { avatarURL in
+                viewModel.setNewProfileAvatar(url: avatarURL)
+            }
+        }
+        profileViewController.logoutPressed = { [weak self] in
+            self?.logout()
         }
         navigationController.pushViewController(profileViewController, animated: true)
     }
     
     
-    func showPhotos() {
-        let photoView = PhotosViewController()
+    func showPhotos(userImage: String, setNewAvatar: @escaping (ImgBBUploadResult) -> Void) {
+        let viewModel = PhotosViewModel(userImage: userImage)
+        viewModel.setNewAvatar = { avatarURL in
+            setNewAvatar(avatarURL)
+        }
+        let photoView = PhotosViewController(viewModel: viewModel)
         navigationController.pushViewController(photoView, animated: true)
     }
 }

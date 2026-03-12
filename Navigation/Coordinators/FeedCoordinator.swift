@@ -15,24 +15,7 @@ class FeedCoordinator: Coordinator {
     
     func start() {
         let feedViewController = FeedViewController()
-        feedViewController.onPost = {[weak self] post in
-            self?.showPost(for: post)
-        }
         navigationController.viewControllers = [feedViewController]
     }
     
-    func showPost(for post: PostTemp) {
-        let postViewController = PostViewController()
-        postViewController.post = post
-        postViewController.onPostsInfo = {[weak self] in
-            self?.showPostsInfo()
-        }
-        navigationController.pushViewController(postViewController, animated: true)
-    }
-    
-    func showPostsInfo() {
-        let infoVC = InfoViewController()
-        infoVC.modalTransitionStyle = .flipHorizontal
-        navigationController.present(infoVC, animated: true)
-    }
 }

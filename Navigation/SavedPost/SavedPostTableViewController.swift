@@ -6,31 +6,18 @@
 //
 
 import UIKit
-import CoreData
-import StorageService
+import RealmSwift
 
 
 class SavedPostTableViewController: UITableViewController {
-    
     var viewModel: SavedPostViewModel
     
-    lazy var fetchResultController = {
-        let request = SavedPost.fetchRequest()
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "author", ascending: true)
-        ]
-        let fetchController = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        fetchController.delegate = self
-        return fetchController
-    }()
+    var notificationToken: NotificationToken?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        tableView.reloadData()
     }
     
     init(viewModel: SavedPostViewModel) {
@@ -46,45 +33,13 @@ class SavedPostTableViewController: UITableViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell_ReuseID")
-        setupNavigation()
-        try? fetchResultController.performFetch()
-    }
-    
-    func setupNavigation() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Фильтр", image: nil, target: self, action: #selector(tapFilter))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Очистить", style: .plain, target: self, action: #selector(cleanFilter))
-        navigationItem.rightBarButtonItem?.isHidden = true
-    }
-    
-    @objc func tapFilter() {
-        let alert = UIAlertController(title: "Filter", message: "Set filter", preferredStyle: .alert)
-        
-        alert.addTextField() { textField in
-            textField.placeholder = "Enter author name"
-        }
-        
-        let confirmAction = UIAlertAction(title: "Enter", style: .default) { [weak self](_) in
-
-            let author = alert.textFields?[0].text ?? ""
-            self?.fetchResultController.fetchRequest.predicate = NSPredicate(format: "author == %@", author)
-
-            try? self?.fetchResultController.performFetch()
+        notificationToken = viewModel.posts.observe { [weak self] _ in
             self?.tableView.reloadData()
-            self?.navigationItem.rightBarButtonItem?.isHidden = false
         }
-        alert.addAction(confirmAction)
-        present(alert, animated: true)
-    }
-    
-    @objc func cleanFilter() {
-        fetchResultController.fetchRequest.predicate = nil
-        try? fetchResultController.performFetch()
-        tableView.reloadData()
-        navigationItem.rightBarButtonItem?.isHidden = true
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchResultController.sections?[section].numberOfObjects ?? 0
+        return viewModel.posts.count
     }
 
     
@@ -95,15 +50,18 @@ class SavedPostTableViewController: UITableViewController {
         ) as? PostTableViewCell else {
             fatalError("could not dequeueReusableCell")
         }
-        let post = fetchResultController.object(at: indexPath)
-        
+        let post = viewModel.posts[indexPath.row]
+
         cell.update(Post(
-            author: post.author ?? "",
-            description: post.pDescription ?? "",
-            image: UIImage(named: post.image ?? ""),
-            likes: 0,
-            views: 0
-        ))
+            id: post.id,
+            userId: "",
+            author: post.author,
+            description: post.postDescription,
+            imageURL: post.imageURL,
+            likes: post.likes,
+            views: post.views,
+            createdAt: post.createdAt
+        ), isSavedView: true)
         return cell
     }
     
@@ -116,34 +74,9 @@ class SavedPostTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let object = fetchResultController.object(at: indexPath)
-            viewModel.deletePost(object)
+            viewModel.deletePost(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         } else if editingStyle == .insert {
         }    
-    }
-}
-
-extension SavedPostTableViewController: NSFetchedResultsControllerDelegate {
-    func controller(_ controller: NSFetchedResultsController<any NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-        case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-        case .update:
-            tableView.reloadData()
-        @unknown default:
-            break
-        }
-    }
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
 }

@@ -7,30 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1228373F2E64B86700204804 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 122837372E64B86700204804 /* StorageService.framework */; };
-		122837402E64B86700204804 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 122837372E64B86700204804 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		125787782F41FD1F003D41AB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 125787772F41FD1F003D41AB /* Kingfisher */; };
 		1275A6D32E7631DB00B13AFD /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 1275A6D22E7631DB00B13AFD /* iOSIntPackage */; };
+		12912F472F621397008C6282 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12912F462F621396008C6282 /* README.md */; };
+		12B5AE5D2F60BE1000877EFF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 12B5AE5C2F60BE1000877EFF /* RealmSwift */; };
+		12B5AE5E2F60BE1000877EFF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 12B5AE5C2F60BE1000877EFF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		12B74AE72EBFA392008ADE9C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12B74AE62EBFA392008ADE9C /* FirebaseAuth */; };
 		12B74AE92EBFA399008ADE9C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 12B74AE82EBFA399008ADE9C /* FirebaseCore */; };
 		12E697252EC10B0F0057434F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 12E697242EC10B0F0057434F /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		1228373D2E64B86700204804 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 12B9E9702E1C3CF10027EAE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 122837362E64B86700204804;
-			remoteInfo = StorageService;
-		};
-		126F41EE2F1ED270002CB239 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 12B9E9702E1C3CF10027EAE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 12B9E9772E1C3CF10027EAE4;
-			remoteInfo = Navigation;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		122837412E64B86700204804 /* Embed Frameworks */ = {
@@ -39,7 +24,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				122837402E64B86700204804 /* StorageService.framework in Embed Frameworks */,
+				12B5AE5E2F60BE1000877EFF /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,8 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		122837372E64B86700204804 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		126F41EA2F1ED270002CB239 /* NavigationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		12912F462F621396008C6282 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		12B9E9782E1C3CF10027EAE4 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -63,14 +47,9 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		122837382E64B86700204804 /* StorageService */ = {
+		1200E54B2F633F9700FAE461 /* screenshots */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = StorageService;
-			sourceTree = "<group>";
-		};
-		126F41EB2F1ED270002CB239 /* NavigationTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NavigationTests;
+			path = screenshots;
 			sourceTree = "<group>";
 		};
 		12B9E97A2E1C3CF10027EAE4 /* Navigation */ = {
@@ -84,25 +63,12 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		122837342E64B86700204804 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		126F41E72F1ED270002CB239 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		12B9E9752E1C3CF10027EAE4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1228373F2E64B86700204804 /* StorageService.framework in Frameworks */,
+				12B5AE5D2F60BE1000877EFF /* RealmSwift in Frameworks */,
+				125787782F41FD1F003D41AB /* Kingfisher in Frameworks */,
 				12B74AE72EBFA392008ADE9C /* FirebaseAuth in Frameworks */,
 				12B74AE92EBFA399008ADE9C /* FirebaseCore in Frameworks */,
 				12E697252EC10B0F0057434F /* FirebaseFirestore in Frameworks */,
@@ -113,20 +79,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1275A6D12E7631DB00B13AFD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		12B9E96F2E1C3CF00027EAE4 = {
 			isa = PBXGroup;
 			children = (
+				1200E54B2F633F9700FAE461 /* screenshots */,
+				12912F462F621396008C6282 /* README.md */,
 				12B9E97A2E1C3CF10027EAE4 /* Navigation */,
-				122837382E64B86700204804 /* StorageService */,
-				126F41EB2F1ED270002CB239 /* NavigationTests */,
-				1275A6D12E7631DB00B13AFD /* Frameworks */,
 				12B9E9792E1C3CF10027EAE4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,71 +93,13 @@
 			isa = PBXGroup;
 			children = (
 				12B9E9782E1C3CF10027EAE4 /* Navigation.app */,
-				122837372E64B86700204804 /* StorageService.framework */,
-				126F41EA2F1ED270002CB239 /* NavigationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		122837322E64B86700204804 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		122837362E64B86700204804 /* StorageService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 122837442E64B86700204804 /* Build configuration list for PBXNativeTarget "StorageService" */;
-			buildPhases = (
-				122837322E64B86700204804 /* Headers */,
-				122837332E64B86700204804 /* Sources */,
-				122837342E64B86700204804 /* Frameworks */,
-				122837352E64B86700204804 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				122837382E64B86700204804 /* StorageService */,
-			);
-			name = StorageService;
-			packageProductDependencies = (
-			);
-			productName = StorageService;
-			productReference = 122837372E64B86700204804 /* StorageService.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		126F41E92F1ED270002CB239 /* NavigationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 126F41F02F1ED270002CB239 /* Build configuration list for PBXNativeTarget "NavigationTests" */;
-			buildPhases = (
-				126F41E62F1ED270002CB239 /* Sources */,
-				126F41E72F1ED270002CB239 /* Frameworks */,
-				126F41E82F1ED270002CB239 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				126F41EF2F1ED270002CB239 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				126F41EB2F1ED270002CB239 /* NavigationTests */,
-			);
-			name = NavigationTests;
-			packageProductDependencies = (
-			);
-			productName = NavigationTests;
-			productReference = 126F41EA2F1ED270002CB239 /* NavigationTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		12B9E9772E1C3CF10027EAE4 /* Navigation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12B9E98B2E1C3CF40027EAE4 /* Build configuration list for PBXNativeTarget "Navigation" */;
@@ -212,9 +112,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				1228373E2E64B86700204804 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				1200E54B2F633F9700FAE461 /* screenshots */,
 				12B9E97A2E1C3CF10027EAE4 /* Navigation */,
 			);
 			name = Navigation;
@@ -223,6 +123,8 @@
 				12B74AE62EBFA392008ADE9C /* FirebaseAuth */,
 				12B74AE82EBFA399008ADE9C /* FirebaseCore */,
 				12E697242EC10B0F0057434F /* FirebaseFirestore */,
+				125787772F41FD1F003D41AB /* Kingfisher */,
+				12B5AE5C2F60BE1000877EFF /* RealmSwift */,
 			);
 			productName = Navigation;
 			productReference = 12B9E9782E1C3CF10027EAE4 /* Navigation.app */;
@@ -238,13 +140,6 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					122837362E64B86700204804 = {
-						CreatedOnToolsVersion = 16.4;
-					};
-					126F41E92F1ED270002CB239 = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = 12B9E9772E1C3CF10027EAE4;
-					};
 					12B9E9772E1C3CF10027EAE4 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -263,6 +158,8 @@
 			packageReferences = (
 				1275A6D02E7630B100B13AFD /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 				12B74AE52EBFA290008ADE9C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				125787762F41FD1F003D41AB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				12B5AE5B2F60BDB000877EFF /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 12B9E9792E1C3CF10027EAE4 /* Products */;
@@ -270,51 +167,22 @@
 			projectRoot = "";
 			targets = (
 				12B9E9772E1C3CF10027EAE4 /* Navigation */,
-				122837362E64B86700204804 /* StorageService */,
-				126F41E92F1ED270002CB239 /* NavigationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		122837352E64B86700204804 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		126F41E82F1ED270002CB239 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		12B9E9762E1C3CF10027EAE4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12912F472F621397008C6282 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		122837332E64B86700204804 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		126F41E62F1ED270002CB239 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		12B9E9742E1C3CF10027EAE4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -324,130 +192,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		1228373E2E64B86700204804 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 122837362E64B86700204804 /* StorageService */;
-			targetProxy = 1228373D2E64B86700204804 /* PBXContainerItemProxy */;
-		};
-		126F41EF2F1ED270002CB239 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 12B9E9772E1C3CF10027EAE4 /* Navigation */;
-			targetProxy = 126F41EE2F1ED270002CB239 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		122837422E64B86700204804 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L7FX5B6LUH;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = homework.StorageService;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_MODULE = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		122837432E64B86700204804 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L7FX5B6LUH;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = homework.StorageService;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_MODULE = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		126F41F12F1ED270002CB239 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L7FX5B6LUH;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = homework.NavigationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Navigation.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Navigation";
-			};
-			name = Debug;
-		};
-		126F41F22F1ED270002CB239 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L7FX5B6LUH;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = homework.NavigationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Navigation.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Navigation";
-			};
-			name = Release;
-		};
 		12B9E98C2E1C3CF40027EAE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -460,6 +205,7 @@
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = test;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to show your location";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Test 2";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -489,6 +235,7 @@
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = test;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to show your location";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Test 2";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -632,24 +379,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		122837442E64B86700204804 /* Build configuration list for PBXNativeTarget "StorageService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				122837422E64B86700204804 /* Debug */,
-				122837432E64B86700204804 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		126F41F02F1ED270002CB239 /* Build configuration list for PBXNativeTarget "NavigationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				126F41F12F1ED270002CB239 /* Debug */,
-				126F41F22F1ED270002CB239 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		12B9E9732E1C3CF10027EAE4 /* Build configuration list for PBXProject "Navigation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -671,11 +400,27 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		125787762F41FD1F003D41AB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
 		1275A6D02E7630B100B13AFD /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
 			requirement = {
 				branch = imagepublisher;
+				kind = branch;
+			};
+		};
+		12B5AE5B2F60BDB000877EFF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = community;
 				kind = branch;
 			};
 		};
@@ -690,10 +435,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		125787772F41FD1F003D41AB /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 125787762F41FD1F003D41AB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		1275A6D22E7631DB00B13AFD /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1275A6D02E7630B100B13AFD /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
+		};
+		12B5AE5C2F60BE1000877EFF /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12B5AE5B2F60BDB000877EFF /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		12B74AE62EBFA392008ADE9C /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

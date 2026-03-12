@@ -5,34 +5,31 @@
 //  Created by Toha Shilin on 8.09.25.
 //
 import UIKit
-
 import FirebaseFirestore
 
-
-protocol UserService {
-    var user: User { get set }
-    func logIn(name: String) -> User?
-}
-
-extension UserService {
-    func logIn(name: String) -> User? {
-//        return user.name == name ? user : nil
-        return user
-    }
-}
 
 class User {
     var name: String
     var fullName: String
-    var image: UIImage?
+    var image: String
+    var deleteImageURL: String
     var status: String
     
     
-    init(name: String, fullName: String, image: UIImage?, status: String) {
+    init(name: String, fullName: String, image: String, status: String, deleteImageURL: String) {
         self.name = name
         self.fullName = fullName
         self.image = image
         self.status = status
+        self.deleteImageURL = deleteImageURL
+    }
+    
+    init(name: String, userExten: UserExtensions) {
+        self.name = name
+        self.fullName = userExten.fullName
+        self.image = userExten.imageName
+        self.status = userExten.status
+        self.deleteImageURL = userExten.deleteImageURL
     }
 }
 
@@ -40,6 +37,7 @@ struct UserExtensions: Codable {
     @DocumentID var id: String?
     var fullName: String
     var imageName: String
+    var deleteImageURL: String
     var status: String
     var userId: String
     
@@ -47,25 +45,8 @@ struct UserExtensions: Codable {
         case id
         case fullName = "full_name"
         case imageName = "image_name"
+        case deleteImageURL = "delete_image_url"
         case status
         case userId = "user_id"
     }
-}
-
-class CurrentUserService: UserService {
-    var user = User(
-        name: "admin",
-        fullName: "Anton Shilin",
-        image: UIImage(named: "Avatar"),
-        status: "tut"
-    )
-}
-
-class TestUserService: UserService {
-    var user = User(
-        name: "admin@gmail.com",
-        fullName: "Test User",
-        image: UIImage(systemName: "person.fill"),
-        status: "Debug mode user"
-    )
 }

@@ -27,5 +27,9 @@ extension UIColor {
     static let photoTableTitleCell: UIColor = createColor(lightMode: .black, darkMode: .white)
     static let postBackCell: UIColor = .systemBackground
     static let postMainTextCell: UIColor = createColor(lightMode: .black, darkMode: .white)
+    static let backgroudnRegForm: UIColor = createColor(
+        lightMode: UIColor(red: 0.282, green: 0.522, blue: 0.8, alpha: 1),
+        darkMode: .systemGray3
+    )
 }
 

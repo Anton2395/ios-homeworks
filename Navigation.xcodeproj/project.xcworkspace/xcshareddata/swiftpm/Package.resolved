@@ -1,5 +1,5 @@
 {
-  "originHash" : "d14fd39897435ee4fa9785ef15633b16db3213f8cf786287115b7191cd41b72d",
+  "originHash" : "74ddb96258ada8410ed725a9331a70820f1d48e20b40452998ea51d972ad836e",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -101,6 +101,15 @@
       }
     },
     {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "revision" : "d30a5fad881137e2267f96a8e3fc35c58999bb94",
+        "version" : "8.6.2"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -125,6 +134,24 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "4cc46f8607516226e5465062fdacd088fbd94552",
+        "version" : "20.1.4"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift",
+      "state" : {
+        "branch" : "community",
+        "revision" : "600e187711e5fa4e8e2c0429cacee27e8e44f112"
       }
     },
     {
