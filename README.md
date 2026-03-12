@@ -48,11 +48,11 @@ iOS приложение, реализующее функционал небол
 
 | Login      | Feed       | Profile    |
 | ---------- | ---------- | ---------- |
-| ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.15.26.png) | ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.15.03.png) | ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.15.51.png) |
+| ![](screenshots/login.png) | ![](screenshots/feed.png) | ![](screenshots/profile.png) |
 
 | Gallery    | Full Screen | Saved Posts |
 | ---------- | ----------- | ----------- |
-| ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.16.45.png) | ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.16.59.png)  | ![](screenshots/Simulator Screenshot - iPhone 15 Pro - 2026-03-12 at 00.17.33.png)  |
+| ![](screenshots/gallery.png) | ![](screenshots/full_screen.png)  | ![](screenshots/saved_post.png)  |
 
 
 ---
@@ -247,34 +247,6 @@ Navigation
 │
 └── Models
 ```
-
----
-
-# Installation
-
-1. Клонировать репозиторий
-
-```
-git clone https://github.com/your-repository/navigation-app.git
-```
-
-2. Установить зависимости (если используются)
-
-3. Добавить конфигурацию Firebase:
-
-```
-GoogleService-Info.plist
-```
-
-4. Запустить проект в Xcode
-
----
-
-# Requirements
-
-* iOS 15+
-* Xcode 15+
-* Swift 5+
 
 ---
 
